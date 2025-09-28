@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Play Game | IGS</title>
+  <style>
+      :root {
+      --primary: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary: #00cec9;
+      --accent: #FFD700;
+      --dark: #0d0d0d;
+      --dark-light: #1a1a1a;
+      --gray: #a4b0be;
+      --light: #f5f6fa;
+      --success: #00b894;
+      --danger: #d63031;
+      --card-bg: rgba(35, 35, 35, 0.9);
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --header-height: 70px;
+      --nav-height: 70px;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    #frame-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: none;
+      z-index: 1;
+    }
+
+    .frame-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('border-frame.png');
+      background-size: cover;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    #exit-button {
+              color: white;
+          background: var(--gradient);
+      position: absolute;
+      top: 10px; right: 10px;
+      z-index: 5;
+      padding: 6px 14px;
+      font-weight: bold;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #layout-switch {
+      position: absolute;
+      top: 10px; left: 10px;
+      z-index: 5;
+      color: white;
+      background: var(--gradient);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #rewards-box {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 4;
+      width: 60px;
+      height: 60px;
+
+      background: url('rewards icon.png') center/contain no-repeat;
+      background-size:40px;
+
+
+      cursor: pointer;
+    }
+
+    #rewards-ring {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      bottom: 8px;
+      right: 10px;
+      border: 5px solid gold;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+      z-index: 3;
+      display: none;
+    }
+
+    #reward-message {
+      position: absolute;
+      bottom: 100px;
+      right: 20px;
+      background: rgba(0,0,0,0.8);
+      color: gold;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+      z-index: 5;
+    }
+
+    #gold-bloom {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      bottom: 8px;
+      right: 10px;
+      background: radial-gradient(circle, gold, transparent);
+      border-radius: 50%;
+      z-index: 6;
+      display: none;
+      animation: bloom 1s ease-out;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes bloom {
+      0% { transform: scale(0.5); opacity: 0.2; }
+      50% { transform: scale(1.5); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    #overlay-start {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    #overlay-start h2 {
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    #overlay-start button {
+      margin: 10px;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      color: white;
+      background: var(--gradient);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="frame-container">
+    <iframe id="game-frame"></iframe>
+    <div class="frame-overlay"></div>
+    <button id="exit-button" onclick="location.href='index.html'">EXIT</button>
+    <div id="overlay-start">
+
+      <h2>🎮 Ready to Play?</h2>
+      <button onclick="startGame()">PLAY</button>
+      <button onclick="location.href='index.html'">EXIT</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCRtPZ34Y1J-p5b7FJxEUagYg3h_D6PbhM",
+      authDomain: "igsfogstudio-df541.firebaseapp.com",
+      projectId: "igsfogstudio-df541",
+      storageBucket: "igsfogstudio-df541.appspot.com",
+      messagingSenderId: "206722625476",
+      appId: "1:206722625476:web:c222830b5404f87bf57e91",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const gameId = new URLSearchParams(location.search).get("id");
+    const iframe = document.getElementById("game-frame");
+    const rewardRing = document.getElementById("rewards-ring");
+    const rewardMessage = document.getElementById("reward-message");
+    const bloom = document.getElementById("gold-bloom");
+
+    let playStart = Date.now();
+    let rewardClaimed30 = false;
+    let rewardClaimed60 = false;
+    let currentUser = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) currentUser = user;
+    });
+
+    async function loadGame() {
+      if (!gameId) return;
+      const gameRef = doc(db, "games", gameId);
+      const gameSnap = await getDoc(gameRef);
+      if (gameSnap.exists()) {
+        const data = gameSnap.data();
+        iframe.src = data.gameUrl || data.url || "about:blank";
+      }
+    }
+
+    function checkPlayTime() {
+      const now = Date.now();
+      const mins = Math.floor((now - playStart) / 60000);
+      if (mins >= 30 && !rewardClaimed60) {
+        rewardRing.style.display = "block";
+        rewardRing.setAttribute("data-reward", "hour");
+      } else if (mins >= 10 && !rewardClaimed30) {
+        rewardRing.style.display = "block";
+        rewardRing.setAttribute("data-reward", "half");
+      }
+    }
+
+    setInterval(checkPlayTime, 10000);
+
+    async function claimReward() {
+      const type = rewardRing.getAttribute("data-reward");
+      if (!type) {
+        alert("⏳ Keep playing! Reward not unlocked yet.");
+        return;
+      }
+
+      let reward = 0;
+      if (type === "half" && !rewardClaimed30) {
+        reward = Math.floor(Math.random() * 16) + 10;
+        rewardClaimed30 = true;
+      } else if (type === "hour" && !rewardClaimed60) {
+        reward = Math.floor(Math.random() * 41) + 15;
+        rewardClaimed60 = true;
+      } else {
+        return;
+      }
+
+      rewardRing.style.display = "none";
+      bloom.style.display = "block";
+      setTimeout(() => bloom.style.display = "none", 1000);
+
+      if (currentUser) {
+        const userRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userRef, { coin: increment(reward) });
+      }
+
+      rewardMessage.textContent = `🎉 You won +${reward} IGS Coins!`;
+      rewardMessage.style.display = "block";
+      setTimeout(() => rewardMessage.style.display = "none", 4000);
+    }
+
+    function startGame() {
+      document.getElementById("overlay-start").style.display = "none";
+      playStart = Date.now();
+    }
+
+    function toggleLayout() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      if (isPortrait) {
+        document.body.style.transform = "rotate(90deg)";
+        document.body.style.transformOrigin = "left top";
+      } else {
+        document.body.style.transform = "rotate(0deg)";
+      }
+    }
+
+    // Expose for inline HTML onclick
+    window.startGame = startGame;
+    window.toggleLayout = toggleLayout;
+    window.claimReward = claimReward;
+
+    loadGame();
+  </script>
+</body>
+</html>

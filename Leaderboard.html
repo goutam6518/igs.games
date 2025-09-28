@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGS Cloud Games - Leaderboard | Top Players, Games & Studios</title>
+  <meta name="description" content="Check the IGS Cloud Games leaderboard to see top players, most popular games, and best studios. Track your progress and compete with gamers worldwide.">
+  <meta name="keywords" content="IGS Cloud Games, gaming leaderboard, top players, best games, gaming studios, game rankings, cloud gaming">
+  <meta name="author" content="IGS Cloud Games">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="IGS Cloud Games - Leaderboard">
+  <meta property="og:description" content="Check the IGS Cloud Games leaderboard to see top players, most popular games, and best studios.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://igscloudgames.com/leaderboard">
+  <meta property="og:image" content="https://igscloudgames.com/images/og-leaderboard.jpg">
+  <meta property="og:site_name" content="IGS Cloud Games">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IGS Cloud Games - Leaderboard">
+  <meta name="twitter:description" content="Check the IGS Cloud Games leaderboard to see top players, most popular games, and best studios.">
+  <meta name="twitter:image" content="https://igscloudgames.com/images/twitter-leaderboard.jpg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://igscloudgames.com/leaderboard">
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+  
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  
+  <style>
+    /* CSS Variables for Consistent Theming */
+    :root {
+      --primary: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary: #00cec9;
+      --accent: #FFD700;
+      --dark: #0d0d0d;
+      --dark-light: #1a1a1a;
+      --gray: #a4b0be;
+      --light: #f5f6fa;
+      --success: #00b894;
+      --danger: #d63031;
+      --card-bg: rgba(35, 35, 35, 0.9);
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --header-height: 70px;
+      --nav-height: 70px;
+    }
+
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, var(--dark), var(--dark-light));
+      color: var(--light);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-top: var(--header-height);
+      padding-bottom: var(--nav-height);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    /* Header Styles */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(25, 25, 25, 0.95);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+    }
+
+    .logo-icon i {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+    }
+    .mobile-menu-btn {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--light);
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(108, 92, 231, 0.2);
+    }
+
+    .search-container {
+      display: none; /* Hidden on mobile by default */
+    }
+
+    .user-actions {
+      display: none; /* Hidden on mobile by default */
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: 100%;
+      height: calc(100vh - var(--header-height));
+      background: rgba(20, 20, 20, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 999;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-search {
+      display: flex;
+      align-items: center;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-search input {
+      background: transparent;
+      border: none;
+      color: var(--light);
+      width: 100%;
+      padding: 5px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .mobile-search i {
+      color: var(--gray);
+      margin-right: 10px;
+    }
+
+    .mobile-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      color: var(--light);
+      transition: all 0.3s;
+    }
+
+    .mobile-nav-item:hover, .mobile-nav-item.active {
+      background: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .mobile-nav-item i {
+      font-size: 1.2rem;
+      width: 25px;
+    }
+
+    .mobile-categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-category {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--light);
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .mobile-category.active, .mobile-category:hover {
+      background: var(--primary);
+    }
+
+    .mobile-user-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .mobile-user-action {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      color: var(--light);
+      transition: all 0.3s;
+    }
+
+    .mobile-user-action:hover {
+      background: rgba(108, 92, 231, 0.2);
+    }
+    .user-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .user-actions button {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--light);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .user-actions button:hover {
+      background: rgba(108, 92, 231, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--danger);
+      color: white;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Content */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.2) 0%, transparent 50%),
+                  radial-gradient(circle at bottom left, rgba(0, 206, 201, 0.2) 0%, transparent 50%);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      z-index: -1;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* Tabs Section */
+    .tabs-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) transparent;
+    }
+
+    .tabs::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .tabs::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .tabs::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    .tab-button {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--light);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.3s;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-button.active, .tab-button:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+    }
+
+    .tab-button i {
+      font-size: 1rem;
+    }
+
+    /* Leaderboard Sections */
+    .leaderboard-section {
+      display: none;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .leaderboard-section.active {
+      display: block;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--gradient);
+      border-radius: 3px;
+    }
+
+    /* Rank Items */
+    .rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rank-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(45, 45, 45, 0.7);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rank-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .rank-item:hover::before {
+      transform: scaleX(1);
+    }
+
+    .rank-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .rank-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .rank-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      width: 30px;
+      text-align: center;
+    }
+
+    .rank-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      overflow: hidden;
+    }
+
+    .rank-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .rank-info {
+      flex: 1;
+    }
+
+    .rank-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: white;
+    }
+
+    .rank-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Special styling for top 3 ranks */
+    .rank-item.top-1 {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(35, 35, 35, 0.9));
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .rank-item.top-1 .rank-number {
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+
+    .rank-item.top-2 {
+      background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(35, 35, 35, 0.9));
+      border-color: rgba(192, 192, 192, 0.3);
+    }
+
+    .rank-item.top-3 {
+      background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(35, 35, 35, 0.9));
+      border-color: rgba(205, 127, 50, 0.3);
+    }
+
+    /* Loading State */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray);
+    }
+
+    .loading i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(15px);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid var(--glass-border);
+      z-index: 100;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--gray);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.7rem;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 60px;
+      position: relative;
+    }
+
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      width: 0;
+      height: 3px;
+      background: var(--gradient);
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .nav-btn.active::before, .nav-btn:hover::before {
+      width: 25px;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--accent);
+    }
+
+    .nav-btn i {
+      font-size: 1.2rem;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 768px) {
+      .hero {
+        padding: 3rem 2rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .tabs {
+        justify-content: center;
+      }
+      
+      .tab-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text {
+        display: none;
+      }
+      
+      .page-title {
+        font-size: 1.1rem;
+      }
+      
+      .hero {
+        padding: 1.5rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .rank-left {
+        gap: 10px;
+      }
+      
+      .rank-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      
+      .rank-number {
+        font-size: 1rem;
+        width: 25px;
+      }
+      
+      .rank-name {
+        font-size: 0.9rem;
+      }
+      
+      .rank-value {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <i class="fas" style="font-size:15px;" >C G</i>
+        </div>
+        <span class="logo-text">Play</span>
+      </a>
+      
+      <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search games..." aria-label="Search games">
+      </div>
+     
+      
+      <button class="mobile-menu-btn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <div class="mobile-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search games..." aria-label="Search games">
+    </div>
+    
+    <nav class="mobile-nav">
+      <a href="#" class="mobile-nav-item active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fas fa-gamepad" onclick="location.href='games.html'"></i>
+        <span>Games</span>
+      </a>
+      <a href="#" class="mobile-nav-item" onclick="location.href='freind.html'">
+        <i class="fas fa-user-friends"></i>
+        <span>Friends</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fas fa-trophy" onclick="location.href='leaderboard.html'"></i>
+        <span>Leaderboard</span>
+      </a>
+    </nav>
+    
+    <h3 style="color: white; margin-bottom: 1rem;">Categories</h3>
+    <div class="mobile-categories">
+      <button class="mobile-category active">All Games</button>
+    </div>
+    
+    <div class="mobile-user-actions">
+      <a href="#" class="mobile-user-action" onclick="location.href='auth.html'">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+
+    <!-- Tabs Container -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab-button active" data-target="rich">
+          <i class="fas fa-coins"></i>
+          Rich Players
+        </button>
+        <button class="tab-button" data-target="bestGame">
+          <i class="fas fa-gamepad"></i>
+          Top Games
+        </button>
+        <button class="tab-button" data-target="bestGamer">
+          <i class="fas fa-trophy"></i>
+          Best Gamers
+        </button>
+        <button class="tab-button" data-target="bestStudio">
+          <i class="fas fa-building"></i>
+          Top Studios
+        </button>
+      </div>
+
+      <!-- Rich Players Section -->
+      <div id="rich" class="leaderboard-section active">
+        <div class="section-header">
+          <h2 class="section-title">💰 Rich Players</h2>
+        </div>
+        <div id="richList" class="rank-list">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading rich players...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Games Section -->
+      <div id="bestGame" class="leaderboard-section">
+        <div class="section-header">
+          <h2 class="section-title">🔥 Top Games</h2>
+        </div>
+        <div id="bestGameList" class="rank-list">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading top games...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Best Gamers Section -->
+      <div id="bestGamer" class="leaderboard-section">
+        <div class="section-header">
+          <h2 class="section-title">🏆 Best Gamers</h2>
+        </div>
+        <div id="bestGamerList" class="rank-list">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading best gamers...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Studios Section -->
+      <div id="bestStudio" class="leaderboard-section">
+        <div class="section-header">
+          <h2 class="section-title">🏢 Top Studios</h2>
+        </div>
+        <div id="bestStudioList" class="rank-list">
+          <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading top studios...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-btn">
+      <i class="fas fa-home" onclick="location.href='index.html'"></i>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn" onclick="location.href='games.html'">
+      <i class="fas fa-gamepad"></i>
+      <span>Games</span>
+    </button>
+
+    <button class="nav-btn" onclick="location.href='freind.html'" >
+      <i class="fas fa-user-friends"></i>
+      <span>Friends</span>
+    </button>
+    <button class="nav-btn active" onclick="location.href='leaderboard.html'">
+      <i class="fas fa-trophy"></i>
+      <span>Leaderboard</span>
+    </button>
+  </nav>
+  <script>
+      const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    // Toggle mobile menu
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    // Firebase Initialization
+    const firebaseConfig = {
+      apiKey: "AIzaSyCRtPZ34Y1J-p5b7FJxEUagYg3h_D6PbhM",
+      authDomain: "igsfogstudio-df541.firebaseapp.com",
+      projectId: "igsfogstudio-df541",
+      storageBucket: "igsfogstudio-df541.firebasestorage.app",
+      messagingSenderId: "206722625476",
+      appId: "1:206722625476:web:c222830b5404f87bf57e91",
+      measurementId: "G-1JL82Z0FK0"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Format numbers for display
+    function formatNumber(num) {
+      if (num >= 1e12) return (num / 1e12).toFixed(1) + "T";
+      if (num >= 1e9) return (num / 1e9).toFixed(1) + "B";
+      if (num >= 1e6) return (num / 1e6).toFixed(1) + "M";
+      if (num >= 1e3) return (num / 1e3).toFixed(1) + "K";
+      return num;
+    }
+
+    // Create rank item HTML
+    function createRankItem(rank, name, value, icon = null, isGame = false) {
+      const rankClass = rank === 1 ? 'top-1' : rank === 2 ? 'top-2' : rank === 3 ? 'top-3' : '';
+      
+      // Determine avatar content
+      let avatarContent = '';
+      if (icon) {
+        avatarContent = `<img src="${icon}" alt="${name}" onerror="this.style.display='none'; this.parentNode.innerHTML='${name.charAt(0).toUpperCase()}'">`;
+      } else {
+        avatarContent = name.charAt(0).toUpperCase();
+      }
+      
+      // Determine value icon
+      let valueIcon = '';
+      if (isGame) {
+        valueIcon = '<i class="fas fa-download"></i>';
+      } else if (name.includes('Studio') || name.includes('studio')) {
+        valueIcon = '<i class="fas fa-box"></i>';
+      } else {
+        valueIcon = '<i class="fas fa-coins"></i>';
+      }
+      
+      return `
+        <div class="rank-item ${rankClass}">
+          <div class="rank-left">
+            <div class="rank-number">#${rank}</div>
+            <div class="rank-avatar">
+              ${avatarContent}
+            </div>
+            <div class="rank-info">
+              <div class="rank-name">${name}</div>
+            </div>
+          </div>
+          <div class="rank-value">
+            ${valueIcon} ${value}
+          </div>
+        </div>
+      `;
+    }
+
+    // Load rich players
+    async function loadRichMan() {
+      const container = document.getElementById("richList");
+      
+      try {
+        const snap = await db.collection("users").get();
+        const users = [];
+        
+        snap.forEach(doc => {
+          const d = doc.data();
+          users.push({ 
+            name: d.name || "User", 
+            coin: d.coin || 0,
+            avatar: d.avatar || null
+          });
+        });
+        
+        users.sort((a, b) => b.coin - a.coin);
+        
+        if (users.length === 0) {
+          container.innerHTML = '<div class="no-data">No user data available</div>';
+          return;
+        }
+        
+        container.innerHTML = users.slice(0, 10).map((u, i) => 
+          createRankItem(i + 1, u.name, formatNumber(u.coin), u.avatar)
+        ).join('');
+      } catch (error) {
+        console.error("Error loading rich players:", error);
+        container.innerHTML = '<div class="no-data">Error loading data</div>';
+      }
+    }
+
+    // Load best gamers
+    async function loadBestGamer() {
+      const container = document.getElementById("bestGamerList");
+      
+      try {
+        const snap = await db.collection("users").get();
+        const users = [];
+        
+        snap.forEach(doc => {
+          const d = doc.data();
+          users.push({ 
+            name: d.name || "User", 
+            point: d.point || 0,
+            avatar: d.avatar || null
+          });
+        });
+        
+        users.sort((a, b) => b.point - a.point);
+        
+        if (users.length === 0) {
+          container.innerHTML = '<div class="no-data">No user data available</div>';
+          return;
+        }
+        
+        container.innerHTML = users.slice(0, 10).map((u, i) => 
+          createRankItem(i + 1, u.name, formatNumber(u.point), u.avatar)
+        ).join('');
+      } catch (error) {
+        console.error("Error loading best gamers:", error);
+        container.innerHTML = '<div class="no-data">Error loading data</div>';
+      }
+    }
+
+    // Load best games
+    async function loadBestGame() {
+      const container = document.getElementById("bestGameList");
+      
+      try {
+        const snap = await db.collection("games").get();
+        const games = [];
+        
+        snap.forEach(doc => {
+          const d = doc.data();
+          games.push({ 
+            name: d.gameName || "Game", 
+            downloads: d.downloadsCount || 0, 
+            logo: d.gameLogoUrl || null 
+          });
+        });
+        
+        games.sort((a, b) => b.downloads - a.downloads);
+        
+        if (games.length === 0) {
+          container.innerHTML = '<div class="no-data">No game data available</div>';
+          return;
+        }
+        
+        container.innerHTML = games.slice(0, 10).map((g, i) => 
+          createRankItem(i + 1, g.name, formatNumber(g.downloads), g.logo, true)
+        ).join('');
+      } catch (error) {
+        console.error("Error loading best games:", error);
+        container.innerHTML = '<div class="no-data">Error loading data</div>';
+      }
+    }
+
+    // Load best studios
+    async function loadBestStudio() {
+      const container = document.getElementById("bestStudioList");
+      
+      try {
+        const snap = await db.collection("games").get();
+        const studioMap = {};
+        
+        snap.forEach(doc => {
+          const d = doc.data();
+          const studio = d.uploaderName || "Unknown Studio";
+          studioMap[studio] = (studioMap[studio] || 0) + (d.downloadsCount || 0);
+        });
+        
+        const studioArr = Object.entries(studioMap).map(([studio, downloads]) => ({ studio, downloads }));
+        studioArr.sort((a, b) => b.downloads - a.downloads);
+        
+        if (studioArr.length === 0) {
+          container.innerHTML = '<div class="no-data">No studio data available</div>';
+          return;
+        }
+        
+        container.innerHTML = studioArr.slice(0, 10).map((s, i) => 
+          createRankItem(i + 1, s.studio, formatNumber(s.downloads))
+        ).join('');
+      } catch (error) {
+        console.error("Error loading best studios:", error);
+        container.innerHTML = '<div class="no-data">Error loading data</div>';
+      }
+    }
+
+    // Tab switching functionality
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update active tab
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.leaderboard-section').forEach(s => s.classList.remove('active'));
+        
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
+      });
+    });
+
+    // Load all leaderboards when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      loadRichMan();
+      loadBestGamer();
+      loadBestGame();
+      loadBestStudio();
+    });
+  </script>
+</body>
+</html>

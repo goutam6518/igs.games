@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IGS - Login / Create Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+  
+      :root {
+      --primary: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary: #00cec9;
+      --accent: #FFD700;
+      --dark: #0d0d0d;
+      --dark-light: #1a1a1a;
+      --gray: #a4b0be;
+      --light: #f5f6fa;
+      --success: #00b894;
+      --danger: #d63031;
+      --card-bg: rgba(35, 35, 35, 0.9);
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --glass: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --header-height: 70px;
+      --nav-height: 70px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #000,#1a1a1a);
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .auth-container {
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s;
+      padding: 30px 25px;
+      width: 65%;
+      max-width: 600px;
+      text-align: center;
+      transition: all 0.3s ease;
+       border:1px solid #1a1a1a;
+       border-radius:10px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: white;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      font-size: 1em;
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: var(--gradient);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #FFC300, #ba9e00);
+    }
+     
+     #cp{
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+     }
+     
+    .switch-auth {
+      margin-top: 16px;
+      font-size: 0.95em;
+      color: #aaa;
+    }
+
+    .switch-auth a {
+      color: #FFD700;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+
+    #createAccountSection, #loginSection {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    #createAccountSection.active, #loginSection.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media(min-width:505px;){
+    .auth-container{
+    min-width:905px;}
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>IGS Login /<span id="cp" >Sing Up</span></h2>
+    <div id="errorMessage" class="error-message"></div>
+
+    <!-- Login -->
+    <div id="loginSection">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required />
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required />
+      </div>
+      <button id="loginButton">Login    》》》 </button>
+      <div class="switch-auth"><p>
+        Don't have an account? <a id="switchToCreate"><span id="cp">Create Account</span></a>
+      </p></div>
+    </div>
+
+    <!-- Create Account -->
+    <div id="createAccountSection" class="active">
+      <div class="form-group">
+        <label for="createUsername">Username</label>
+        <input type="text" id="createUsername" required />
+      </div>
+      <div class="form-group">
+        <label for="createEmail">Email</label>
+        <input type="email" id="createEmail" required />
+      </div>
+      <div class="form-group">
+        <label for="createPassword">Password</label>
+        <input type="password" id="createPassword" required />
+      </div>
+      <button id="createAccountButton">Create Account 》》》 </button>
+      <div class="switch-auth">
+        Already have an account? <a id="switchToLogin"><span id="cp">Login</span></a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js';
+    import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js';
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCRtPZ34Y1J-p5b7FJxEUagYg3h_D6PbhM",
+      authDomain: "igsfogstudio-df541.firebaseapp.com",
+      projectId: "igsfogstudio-df541",
+      storageBucket: "igsfogstudio-df541.appspot.com",
+      messagingSenderId: "206722625476",
+      appId: "1:206722625476:web:c222830b5404f87bf57e91"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginSection = document.getElementById('loginSection');
+    const createSection = document.getElementById('createAccountSection');
+    const errorMessage = document.getElementById('errorMessage');
+
+    document.getElementById('switchToCreate').onclick = () => {
+      loginSection.classList.remove('active');
+      createSection.classList.add('active');
+      errorMessage.textContent = '';
+    };
+
+    document.getElementById('switchToLogin').onclick = () => {
+      createSection.classList.remove('active');
+      loginSection.classList.add('active');
+      errorMessage.textContent = '';
+    };
+
+    document.getElementById('createAccountButton').onclick = async () => {
+      const username = document.getElementById('createUsername').value.trim();
+      const email = document.getElementById('createEmail').value.trim();
+      const password = document.getElementById('createPassword').value;
+
+      if (!username || !email || !password) {
+        errorMessage.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCred.user, { displayName: username });
+
+        await setDoc(doc(db, 'users', userCred.user.uid), {
+          uid: userCred.user.uid,
+          userName: username,
+          email: email,
+          studioName: '',
+          access: 'gamer'
+        });
+
+        errorMessage.style.color = 'green';
+        errorMessage.textContent = "Account created successfully!";
+        setTimeout(() => window.location.href = "index.html", 1500);
+      } catch (err) {
+        errorMessage.textContent = getErrorMessage(err.code);
+      }
+    };
+
+    document.getElementById('loginButton').onclick = async () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        errorMessage.textContent = "Please enter email and password.";
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        errorMessage.style.color = 'green';
+        errorMessage.textContent = "Login successful!";
+        setTimeout(() => window.location.href = "index.html", 1500);
+      } catch (err) {
+        errorMessage.textContent = getErrorMessage(err.code);
+      }
+    };
+
+    function getErrorMessage(code) {
+      switch (code) {
+        case 'auth/email-already-in-use': return 'Email already in use.';
+        case 'auth/invalid-email': return 'Invalid email.';
+        case 'auth/weak-password': return 'Password should be at least 6 characters.';
+        case 'auth/user-not-found': return 'No user with this email.';
+        case 'auth/wrong-password': return 'Incorrect password.';
+        default: return 'Something went wrong.';
+      }
+    }
+  </script>
+</body>
+</html>
