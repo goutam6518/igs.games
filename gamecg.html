@@ -180,7 +180,11 @@
 </head>
 <body>
   <div id="frame-container">
-    <iframe id="game-frame"></iframe>
+<iframe 
+  id="game-frame" 
+  allow="fullscreen; autoplay" 
+  allowfullscreen>
+</iframe>
     <div class="frame-overlay"></div>
     <button id="exit-button" onclick="location.href='index.html'">EXIT</button>
     <div id="overlay-start">
@@ -297,133 +301,17 @@ function exitGame() {
   document.getElementById("overlay-start").style.display = "none";
   playStart = Date.now();
 
-  // Request fullscreen for the container (iframe + buttons)
   const container = document.getElementById("frame-container");
   if (container.requestFullscreen) {
-    container.requestFullscreen();
-  } else if (container.webkitRequestFullscreen) { 
+    container.requestFullscreen().catch(err => {
+      console.warn("Fullscreen blocked:", err);
+    });
+  } else if (container.webkitRequestFullscreen) {
     container.webkitRequestFullscreen();
   } else if (container.msRequestFullscreen) {
     container.msRequestFullscreen();
   }
 }
-    function toggleLayout() {
-      const isPortrait = window.innerHeight > window.innerWidth;
-      if (isPortrait) {
-        document.body.style.transform = "rotate(90deg)";
-        document.body.style.transformOrigin = "left top";
-      } else {
-        document.body.style.transform = "rotate(0deg)";
-      }
-    }
-
-    // Expose for inline HTML onclick
-    window.startGame = startGame;
-    window.toggleLayout = toggleLayout;
-    window.claimReward = claimReward;
-
-    loadGame();
-  </script>
-</body>
-</html>      <button onclick="startGame()">PLAY</button>
-      <button onclick="location.href='index.html'">EXIT</button>
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCRtPZ34Y1J-p5b7FJxEUagYg3h_D6PbhM",
-      authDomain: "igsfogstudio-df541.firebaseapp.com",
-      projectId: "igsfogstudio-df541",
-      storageBucket: "igsfogstudio-df541.appspot.com",
-      messagingSenderId: "206722625476",
-      appId: "1:206722625476:web:c222830b5404f87bf57e91",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    const gameId = new URLSearchParams(location.search).get("id");
-    const iframe = document.getElementById("game-frame");
-    const rewardRing = document.getElementById("rewards-ring");
-    const rewardMessage = document.getElementById("reward-message");
-    const bloom = document.getElementById("gold-bloom");
-
-    let playStart = Date.now();
-    let rewardClaimed30 = false;
-    let rewardClaimed60 = false;
-    let currentUser = null;
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) currentUser = user;
-    });
-
-    async function loadGame() {
-      if (!gameId) return;
-      const gameRef = doc(db, "games", gameId);
-      const gameSnap = await getDoc(gameRef);
-      if (gameSnap.exists()) {
-        const data = gameSnap.data();
-        iframe.src = data.gameUrl || data.url || "about:blank";
-      }
-    }
-
-    function checkPlayTime() {
-      const now = Date.now();
-      const mins = Math.floor((now - playStart) / 60000);
-      if (mins >= 30 && !rewardClaimed60) {
-        rewardRing.style.display = "block";
-        rewardRing.setAttribute("data-reward", "hour");
-      } else if (mins >= 10 && !rewardClaimed30) {
-        rewardRing.style.display = "block";
-        rewardRing.setAttribute("data-reward", "half");
-      }
-    }
-
-    setInterval(checkPlayTime, 10000);
-
-    async function claimReward() {
-      const type = rewardRing.getAttribute("data-reward");
-      if (!type) {
-        alert("⏳ Keep playing! Reward not unlocked yet.");
-        return;
-      }
-
-      let reward = 0;
-      if (type === "half" && !rewardClaimed30) {
-        reward = Math.floor(Math.random() * 16) + 10;
-        rewardClaimed30 = true;
-      } else if (type === "hour" && !rewardClaimed60) {
-        reward = Math.floor(Math.random() * 41) + 15;
-        rewardClaimed60 = true;
-      } else {
-        return;
-      }
-
-      rewardRing.style.display = "none";
-      bloom.style.display = "block";
-      setTimeout(() => bloom.style.display = "none", 1000);
-
-      if (currentUser) {
-        const userRef = doc(db, "users", currentUser.uid);
-        await updateDoc(userRef, { coin: increment(reward) });
-      }
-
-      rewardMessage.textContent = `🎉 You won +${reward} IGS Coins!`;
-      rewardMessage.style.display = "block";
-      setTimeout(() => rewardMessage.style.display = "none", 4000);
-    }
-
-    function startGame() {
-      document.getElementById("overlay-start").style.display = "none";
-      playStart = Date.now();
-    }
-
     function toggleLayout() {
       const isPortrait = window.innerHeight > window.innerWidth;
       if (isPortrait) {
