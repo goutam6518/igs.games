@@ -1,1293 +1,1501 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Favicon (Consolidated - removed duplicates) -->
-  <link rel="icon" type="image/png" href="Polish_20250929_214523847.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="Polish_20250929_214523847.png">
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Enhanced SEO Title: Incorporates primary keywords for better CTR and ranking -->
-  <title> CG Play: Free Online Games, Web Games & .io Games - Play Instantly No Download</title>
-  <!-- Enhanced Meta Description: 150-160 chars, includes keywords, call-to-action for clicks -->
-  <meta name="description" content="Play free online games, web games, .io games & more instantly in your browser at IGS Cloud Games. No downloads required. Enjoy cloud gaming on mobile, PC – action, puzzle, multiplayer hits!">
-  <!-- Expanded Keywords: High-volume terms like online games, .io games, web games for relevance -->
-  <meta name="keywords" content="online games, free online games, web games, .io games, browser games, cloud gaming, instant play games, multiplayer .io games, no download games, mobile web games, action online games, puzzle web games, IGS games, free browser games, HTML5 games">
-  <meta name="author" content="CG Play">
-  <meta name="robots" content="index, follow">
-  <!-- Additional SEO Metas for Core Web Vitals & Ranking -->
-  <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN_HERE"> <!-- Add via Google Search Console -->
-  <meta name="theme-color" content="#6c5ce7"> <!-- For PWA/mobile ranking boost -->
-  
-  <!-- Open Graph / Social Media Meta Tags (Optimized for shares) -->
-  <meta property="og:title" content="CG Play: Free Online Games, .io Games & Web Games - Instant Play">
-  <meta property="og:description" content="Discover free online games, addictive .io games, and web games. Play instantly without downloads on any device. Join millions in cloud gaming fun!">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cgplay.fun">
-  <meta property="og:image" content="https://cgplay.fun/images/cgplay.png">
-  <meta property="og:site_name" content="CG Plqy">
-  <meta property="og:locale" content="en_US">
-  
-  <!-- Twitter Card Meta Tags (Enhanced for virality) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CG Play: Play Free .io Games, Online Games & More Instantly">
-  <meta name="twitter:description" content="Free web games, .io multiplayer battles, and browser-based adventures. No installs – just pure gaming joy on mobile or desktop!">
-  <meta name="twitter:image" content="https://cgplay.fun/images/cgplay.png">
-  <meta name="twitter:site" content="@cgplay.fun"> <!-- Add your Twitter handle -->
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://cgplay.fun">
-  
-  <!-- Structured Data (JSON-LD) for Games & Site - Boosts rich snippets & ranking -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name":"CG aply",
-    "url": "https://cgplay.fun",
-    "description": "Platform for free online games, .io games, and web games with instant browser play.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://cgplay.fun/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    },
-    "sameAs": [
-      "https://youtube.com/@thefogstudio18",
-      "https://www.instagram.com/fogstudio18",
-      "https://discord.gg/cgplay" <!-- Add real Discord if available -->
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Free Online Games and .io Games",
-    "description": "Browse our collection of free web games, .io multiplayer games, and instant-play browser titles.",
-    "url": "https://cgplay.fun",
-    "provider": {
-      "@type": "Organization",
-      "name": "Cg play",
-      "url": "https://cgplay.fun"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Online Games Catalog",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Game",
-            "name": ".io Games",
-            "genre": "Multiplayer",
-            "playMode": "Browser"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Game",
-            "name": "Web Games",
-            "genre": "Action, Puzzle",
-            "playMode": "Single-player"
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ardon Beauty - Home Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
-      ]
-    }
-  }
-  </script>
-  
-  <!-- Preload Critical Resources -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" as="style">
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-  
-  <!-- Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    /* CSS Variables for Consistent Theming */
-    :root {
-      --primary: #6c5ce7;
-      --primary-dark: #5649c0;
-      --secondary: #00cec9;
-      --accent: #FFD700;
-      --dark: #0d0d0d;
-      --dark-light: #1a1a1a;
-      --gray: #a4b0be;
-      --light: #f5f6fa;
-      --success: #00b894;
-      --danger: #d63031;
-      --card-bg: rgba(35, 35, 35, 0.9);
-      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      --glass: rgba(255, 255, 255, 0.05);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --header-height: 70px;
-      --nav-height: 70px;
-    }
-
-    /* Reset and Base Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, var(--dark), var(--dark-light));
-      color: var(--light);
-      min-height: 100vh;
-      line-height: 1.6;
-      overflow-x: hidden;
-      padding-top: var(--header-height);
-      padding-bottom: var(--nav-height);
-    }
-
-    /* Typography */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 600;
-      line-height: 1.3;
-    }
-    .nav-btn.active::before, .nav-btn:hover::before {
-      width: 25px;
-    }
-    p {
-      margin-bottom: 1rem;
-    }
-
-    a {
-      color: var(--secondary);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    a:hover {
-      color: var(--accent);
-    }
-
-    /* Header Styles - Mobile First */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--header-height);
-      background: rgba(25, 25, 25, 0.95);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--glass-border);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      padding: 0 1rem;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--gradient);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
-    }
-
-    .logo-icon i {
-      color: white;
-      font-size: 1.5rem;
-    }
-
-    .logo-text {
-      font-size: 1.3rem;
-      font-weight: 700;
-      background: linear-gradient(to right, var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: none; /* Hidden on mobile by default */
-    }
-
-    .mobile-menu-btn {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      color: var(--light);
-      width: 45px;
-      height: 45px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .mobile-menu-btn:hover {
-      background: rgba(108, 92, 231, 0.2);
-    }
-
-    .search-container {
-      display: none; /* Hidden on mobile by default */
-    }
-
-    .user-actions {
-      display: none; /* Hidden on mobile by default */
-    }
-
-    /* Mobile Menu */
-    .mobile-menu {
-      position: fixed;
-      top: var(--header-height);
-      left: 0;
-      width: 100%;
-      height: calc(100vh - var(--header-height));
-      background: rgba(20, 20, 20, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 999;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-      padding: 2rem 1rem;
-      overflow-y: auto;
-    }
-
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
-
-    .mobile-search {
-      display: flex;
-      align-items: center;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin-bottom: 2rem;
-    }
-
-    .mobile-search input {
-      background: transparent;
-      border: none;
-      color: var(--light);
-      width: 100%;
-      padding: 5px;
-      outline: none;
-      font-size: 1rem;
-    }
-
-    .mobile-search i {
-      color: var(--gray);
-      margin-right: 10px;
-    }
-
-    .mobile-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .mobile-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 15px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      color: var(--light);
-      transition: all 0.3s;
-    }
-
-    .mobile-nav-item:hover, .mobile-nav-item.active {
-      background: var(--primary);
-      transform: translateX(5px);
-    }
-
-    .mobile-nav-item i {
-      font-size: 1.2rem;
-      width: 25px;
-    }
-
-    .mobile-categories {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 2rem;
-    }
-
-    .mobile-category {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      color: var(--light);
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-    }
-
-    .mobile-category.active, .mobile-category:hover {
-      background: var(--primary);
-    }
-
-    .mobile-user-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .mobile-user-action {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 15px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      color: var(--light);
-      transition: all 0.3s;
-    }
-
-    .mobile-user-action:hover {
-      background: rgba(108, 92, 231, 0.2);
-    }
-
-    .notification-badge {
-      background: var(--danger);
-      color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 0.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: auto;
-    }
-
-    /* Main Content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    /* Hero Section - Enhanced with Keywords for On-Page SEO */
-    .hero {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: radial-gradient(circle at top right, rgba(108, 92, 231, 0.2) 0%, transparent 50%),
-                  radial-gradient(circle at bottom left, rgba(0, 206, 201, 0.2) 0%, transparent 50%);
-      border-radius: 20px;
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px);
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      z-index: -1;
-    }
-
-    .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(to right, var(--accent), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 1rem;
-      color: var(--gray);
-      max-width: 600px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .cta-button {
-      background: var(--gradient);
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 30px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1rem;
-      box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: 0.5s;
-    }
-
-    .cta-button:hover::before {
-      left: 100%;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
-    }
-
-    /* Section Styles */
-    .section-title {
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .section-title h2 {
-      position: relative;
-      padding-bottom: 8px;
-    }
-
-    .section-title h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 40px;
-      height: 3px;
-      background: var(--gradient);
-      border-radius: 3px;
-    }
-
-    .view-all {
-      color: var(--secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.3s;
-    }
-
-    .view-all:hover {
-      gap: 10px;
-      color: var(--accent);
-    }
-
-    /* Game List - Add alt attributes in JS for SEO */
-    .game-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .game-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--glass-border);
-      border-radius: 15px;
-      padding: 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .game-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
-    .game-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-      border-color: rgba(108, 92, 231, 0.5);
-    }
-
-    .game-card img {
-      width: 100%;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 0.8rem;
-      transition: transform 0.3s;
-    }
-
-    .game-card:hover img {
-      transform: scale(1.05);
-    }
-
-    .game-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: white;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .game-author {
-      font-size: 0.75rem;
-      color: var(--gray);
-      margin-bottom: 0.5rem;
-    }
-
-    .game-rating {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-      color: var(--accent);
-    }
-
-    .game-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--gradient);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Features Section - Keyword-Infused Content */
-    .features {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-
-    .feature-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 15px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: var(--gradient);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-    }
-
-    .feature-icon i {
-      font-size: 1.5rem;
-      color: white;
-    }
-
-    .feature-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.8rem;
-      color: white;
-    }
-
-    .feature-card p {
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-    .nav-btn.active, .nav-btn:hover {
-      color: var(--accent);
-    }
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: var(--nav-height);
-      background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(15px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 10px 0;
-      border-top: 1px solid var(--glass-border);
-      z-index: 100;
-    }
-
-    .nav-btn {
-      background: none;
-      border: none;
-      color: var(--gray);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 0.7rem;
-      gap: 5px;
-      cursor: pointer;
-      transition: all 0.3s;
-      width: 60px;
-      position: relative;
-    }
-
-    .nav-btn::before {
-      content: '';
-      position: absolute;
-      top: -10px;
-      width: 0;
-      height: 3px;
-      background: var(--gradient);
-      border-radius: 3px;
-      transition: width 0.3s;
-    }
-
-    .nav-btn.active::before, .nav-btn:hover::before {
-      width: 25px;
-    }
-
-    .nav-btn.active, .nav-btn:hover {
-      color: var(--accent);
-    }
-
-    .nav-btn i {
-      font-size: 1.2rem;
-    }
-
-    /* Loading State */
-    .loading {
-      text-align: center;
-      padding: 2rem;
-      color: var(--gray);
-      grid-column: 1 / -1;
-    }
-
-    .loading i {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-
-    /* Footer - Fixed Typos, Updated Year, Keyword Links */
-    footer {
-      background: rgba(15, 15, 15, 0.95);
-      border-top: 1px solid var(--glass-border);
-      padding: 2rem 1rem 1rem;
-      margin-top: 2rem;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-column h3 {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: white;
-      position: relative;
-      padding-bottom: 8px;
-    }
-
-    .footer-column h3::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 25px;
-      height: 2px;
-      background: var(--gradient);
-    }
-
-    .footer-column ul {
-      list-style: none;
-    }
-
-    .footer-column ul li {
-      margin-bottom: 0.7rem;
-    }
-
-    .footer-column ul li a {
-      color: var(--gray);
-      text-decoration: none;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-    }
-
-    .footer-column ul li a:hover {
-      color: var(--secondary);
-      gap: 12px;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 1rem;
-    }
-
-    .social-links a {
-      width: 40px;
-      height: 40px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .social-links a:hover {
-      background: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--glass-border);
-      color: var(--gray);
-      font-size: 0.8rem;
-    }
-
-    /* Tablet Styles */
-    @media (min-width: 768px) {
-      :root {
-        --header-height: 80px;
-      }
-      
-      html {
-        font-size: 17px;
-      }
-      
-      .logo-text {
-        display: block; /* Show logo text on tablet */
-      }
-      
-      .mobile-menu-btn {
-        display: none; /* Hide mobile menu button on tablet */
-      }
-      
-      .search-container {
-        display: flex; /* Show search on tablet */
-        align-items: center;
-        background: var(--glass);
-        border: 1px solid var(--glass-border);
-        border-radius: 30px;
-        padding: 8px 20px;
-        width: 50%;
-        transition: all 0.3s;
-      }
-
-      .search-container:focus-within {
-        box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.3);
-      }
-
-      .search-container input {
-        background: transparent;
-        border: none;
-        color: var(--light);
-        width: 100%;
-        padding: 5px;
-        outline: none;
-        font-size: 1rem;
-      }
-
-      .search-container i {
-        color: var(--gray);
-        margin-right: 10px;
-      }
-      
-      .user-actions {
-        display: flex; /* Show user actions on tablet */
-        gap: 10px;
-      }
-
-      .user-actions button {
-        background: var(--glass);
-        border: 1px solid var(--glass-border);
-        color: var(--light);
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s;
-        position: relative;
-      }
-
-      .user-actions button:hover {
-        background: rgba(108, 92, 231, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      .mobile-menu {
-        display: none; /* Hide mobile menu on tablet */
-      }
-      
-      .game-list {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-      }
-      
-      .features {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* Desktop Styles */
-    @media (min-width: 1024px) {
-      :root {
-        --header-height: 90px;
-        --nav-height: 80px;
-      }
-      
-      html {
-        font-size: 18px;
-      }
-      
-      .header-content {
-        padding: 0 2rem;
-      }
-      
-      main {
-        padding: 2rem;
-      }
-      
-      .hero {
-        padding: 3rem 2rem;
-      }
-      
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .game-list {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-      }
-      
-      .game-card img {
-        height: 140px;
-      }
-      
-      .features {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-      
-      .footer-content {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      
-      .nav-btn {
-        width: 70px;
-        font-size: 0.75rem;
-      }
-      
-      .nav-btn i {
-        font-size: 1.3rem;
-      }
-    }
-
-    /* Large Desktop Styles */
-    @media (min-width: 1200px) {
-      .game-list {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
-  </style>
+
+        :root {
+            --primary: #ff4d94;
+            --secondary: #ff8ab5;
+            --accent: #ffc2d6;
+            --dark: #333;
+            --light: #f9f9f9;
+            --gray: #777;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --smooth: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--smooth);
+            z-index: 1000;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            margin-right: 20px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 800;
+            transition: var(--transition);
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .close-sidebar {
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: none;
+        }
+
+        .close-sidebar:hover {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .nav-links {
+            margin-top: 20px;
+        }
+
+        .nav-links li {
+            list-style: none;
+            padding: 15px 20px;
+            transition: var(--smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--smooth);
+            z-index: -1;
+        }
+
+        .nav-links li:hover::before {
+            left: 0;
+        }
+
+        .nav-links li:hover {
+            padding-left: 25px;
+        }
+
+        .nav-links li.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-left: 4px solid var(--accent);
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .nav-links i {
+            font-size: 18px;
+            width: 25px;
+            transition: var(--transition);
+        }
+
+        .nav-links li:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+            transition: var(--smooth);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: var(--smooth);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 80px 40px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            animation: fadeIn 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,77,148,0.3), rgba(255,138,181,0.3));
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 25px;
+            animation: slideInUp 0.8s ease 0.4s both;
+        }
+
+        .hero .btn {
+            animation: slideInUp 0.8s ease 0.6s both;
+        }
+
+        /* Categories Section */
+        .section-title {
+            font-size: 28px;
+            margin: 30px 0 20px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--smooth);
+        }
+
+        .section-title:hover::after {
+            width: 120px;
+        }
+
+        /* Circular Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+            justify-items: center;
+        }
+
+        .category-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--smooth);
+            animation: fadeInUp 0.6s ease;
+            width: 140px;
+        }
+
+        .category-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 24px;
+            margin-bottom: 12px;
+            transition: var(--smooth);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: var(--smooth);
+        }
+
+        .category-circle:hover .category-icon {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-circle:hover .category-icon::before {
+            transform: translateX(0);
+        }
+
+        .category-circle:hover .category-name {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .category-name {
+            font-weight: 500;
+            transition: var(--smooth);
+            font-size: 14px;
+        }
+
+        .category-price {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Services Section */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--smooth);
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--smooth);
+        }
+
+        .service-card:hover .service-img {
+            transform: scale(1.05);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-content h3 {
+            color: var(--primary);
+        }
+
+        .service-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .service-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* Service Details Modal */
+        .service-details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .service-details-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            animation: slideInUp 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .service-price-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .service-price-header h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .service-price {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 77, 148, 0.2);
+            outline: none;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            animation: slideInUp 0.4s ease;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .auth-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--smooth);
+        }
+
+        .auth-tab.active::after {
+            width: 100%;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+        }
+
+        .auth-tab:hover {
+            color: var(--primary);
+        }
+
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+                text-align: center;
+            }
+
+            .sidebar-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo h1 {
+                font-size: 18px;
+            }
+
+            .nav-links li a span {
+                display: none;
+            }
+
+            .nav-links li {
+                padding: 15px 10px;
+            }
+
+            .main-content {
+                margin-left: 80px;
+            }
+
+            .close-sidebar {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -100%;
+            }
+
+            .sidebar.active {
+                left: 0;
+                width: 250px;
+            }
+
+            .nav-links li a span {
+                display: inline-block;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 50px 20px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 20px;
+            }
+
+            .category-circle {
+                width: 110px;
+            }
+
+            .category-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .user-actions {
+                position: absolute;
+                left: 300px;
+            }
+
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 40px 15px;
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            .category-circle {
+                width: 100px;
+            }
+
+            .category-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 18px;
+            }
+
+            .category-name {
+                font-size: 12px;
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--accent);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            margin-top: 15px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideInRight 0.5s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Header - Fixed Logo Icon (Use proper class, no inline style) -->
-  <header>
-    <div class="header-content">
-      <a href="#" class="logo">
-        <div class="logo-icon">
-          <i class="fas fa-gamepad"></i> <!-- Better icon for gaming SEO -->
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Processing...</div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i> Operation completed successfully!
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="favicon.jpg" height="50px" style="border-radius:10px;"/>  <h1>Ardon<span>  Beauty</span></h1>
+                </div>
+                <div class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                <li><a href="https://wa.me/7901885794"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a></li>
+                <li><a href="https://www.instagram.com/ardon.in?igsh=cHRlMHRwZG5mNmtu"><i class="fab fa-instagram"></i><span>Instagram</span></a></li>
+                <li><a href="https://youtube.com/@thefogstudio18?si=hk1jyDGFPB9dnDZZ"><i class="fab fa-youtube"></i><span>YouTube</span></a></li>
+                <li><a href="tel:+7901885794"><i class="fas fa-phone"></i> <span>Contact</span></a></li>
+                <li><a href="#"><i class="fas fa-user"></i> <span>About Us</span></a></li>
+            </ul>
         </div>
-        <span class="logo-text">Cloud Games</span>
-      </a>
-      
-      <div class="search-container">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search online games, .io games..." aria-label="Search online games, web games, .io games">
-      </div>
-      
-      <div class="user-actions">
-        <button aria-label="User Profile">
-          <i class="fas fa-user" onclick="location.href='auth.html'"></i>
-        </button>
-      </div>
-      
-      <button class="mobile-menu-btn" aria-label="Open menu">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </header>
 
-  <!-- Mobile Menu - Fixed Typos -->
- <!-- Mobile Menu -->
-  <div class="mobile-menu">
-    <div class="mobile-search">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search games..." aria-label="Search games">
-    </div>
-    
-    <nav class="mobile-nav">
-      <a href="index.html" class="mobile-nav-item" onclick="location.href='index.html'">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="games.html" class="mobile-nav-item">
-        <i class="fas fa-gamepad" onclick="location.href='games.html'"></i>
-        <span>Games</span>
-      </a>
-      <a href="freind.html" class="mobile-nav-item active">
-        <i class="fas fa-user-friends"></i>
-        <span>Friends</span>
-      </a>
-      <a href="leaderboard.html" class="mobile-nav-item">
-        <i class="fas fa-trophy" onclick="location.href='leaderboard.html'"></i>
-        <span>Leaderboard</span>
-      </a>
-    </nav>
-    
-    <h3 style="color: white; margin-bottom: 1rem;">Categories</h3>
-    <div class="mobile-categories">
-      <button class="mobile-category active">All Games</button>
-    </div>
-    
-    <div class="mobile-user-actions">
-      <a href="#" class="mobile-user-action" onclick="location.href='auth.html'">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Logout</span>
-      </a>
-    </div>
-  </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="user-actions">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="bookNowBtn" style="display: none;">Book Now</button>
+                </div>
+            </div>
 
-  <!-- Main Content - Keyword-Optimized -->
-  <main>
-    <!-- Hero Section - Natural Keyword Integration -->
-    <section class="hero">
-      <h1>Play Free Online Games, .io Games & Web Games Instantly</h1>
-      <p>Discover the best free online games, addictive .io games, and seamless web games right in your browser. No downloads – just instant cloud gaming fun on mobile, tablet, or desktop. Join the action today!</p>
-      <button class="cta-button">Explore .io Games Now</button>
-    </section>
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Professional Beauty Services at Your Doorstep</h2>
+                    <p>Experience luxury beauty and makeup services in the comfort of your home. Our expert artists are trained to bring out your natural beauty.</p>
+                    <button class="btn btn-primary" id="exploreBtn">Explore Services</button>
+                </div>
+            </section>
 
-    <!-- Featured Games Section - H2 with Keywords -->
-    <section>
-      <div class="section-title">
-        <h2>Featured Free Games</h2>
-        <a href="games.html" class="view-all">View All Web Games <i class="fas fa-arrow-right"></i></a>
-      </div>
+            <!-- Categories Section -->
+            <section class="categories-section">
+                <h2 class="section-title">Our Beauty Categories</h2>
+                <div class="categories-grid" id="categoriesGrid">
+                    <!-- Categories will be loaded dynamically from Firebase -->
+                </div>
+            </section>
 
-      <div id="gamesContainer" class="loading">
-        <i class="fas fa-spinner fa-spin"></i>
-        <p>Loading .io games and online titles...</p>
-      </div>
-    </section>
-
-    <!-- Features Section - Expanded with Keywords -->
-    <section class="features">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-bolt"></i>
+            <!-- Services Section -->
+            <section class="services-section">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services" id="servicesGrid">
+                    <!-- Services will be loaded dynamically from Firebase -->
+                </div>
+            </section>
         </div>
-        <h3>Instant Online Games</h3>
-        <p>Jump into free online games and web games immediately – no downloads or lag. Perfect for quick sessions of .io multiplayer action.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-cloud"></i>
-        </div>
-        <h3>Cloud-Powered .io Games</h3>
-        <p>Experience smooth .io games and browser-based adventures with cloud tech. Play on any device without compromising quality.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fas fa-gamepad"></i>
-        </div>
-        <h3>Vast Web Games Library</h3>
-        <p>Browse hundreds of free web games, .io classics, and new online releases across genres like action, puzzle, and strategy.</p>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer - Fixed Typos, Updated Year, Keyword Links -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>IGS Cloud Games</h3>
-        <p style="color: var(--gray); margin-bottom: 1rem;">Your go-to for free online games, .io games, and web games with instant browser play.</p>
-        <div class="social-links">
-          <a href="https://youtube.com/@thefogstudio18?si=bgmx-ZOjSQw3q18J" aria-label="YouTube - .io Games Tips"><i class="fab fa-youtube"></i></a>
-          <a href="https://www.instagram.com/fogstudio18?igsh=bTU2OHgzMHFjM3A4" aria-label="Instagram - Online Games"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Discord - Join .io Community"><i class="fab fa-discord"></i></a>
-        </div>
-      </div>
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-          <li><a href="games.html"><i class="fas fa-chevron-right"></i> Online Games</a></li>
-          <li><a href="friends.html"><i class="fas fa-chevron-right"></i> Friends</a></li> <!-- Fixed -->
-          <li><a href="leaderboard.html"><i class="fas fa-chevron-right"></i> Leaderboard</a></li> <!-- Fixed casing -->
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Support</h3>
-        <ul>
-          <li><a href="mailto:gkfogatudio7@gmail.com"><i class="fas fa-chevron-right"></i> gkfogatudio7@gmail.com</a></li>
-          <li><a href="tel:+919888670627"><i class="fas fa-chevron-right"></i> +91 9888670627</a></li>
-          <li><a href="https://www.fogstudio18.site/"><i class="fas fa-chevron-right"></i> Website</a></li>
-        </ul>
-      </div>
     </div>
-    <div class="copyright">
-      <p>&copy; 2025 IGS Cloud Games. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p> <!-- Updated year, added links for trust -->
+
+    <!-- Service Details Modal -->
+    <div class="service-details-modal" id="serviceDetailsModal">
+        <div class="service-details-content">
+            <span class="close-modal">&times;</span>
+            <div class="service-price-header">
+                <h3 id="selectedServiceName">Service Name</h3>
+                <div class="service-price" id="selectedServicePrice">₹0</div>
+            </div>
+            <h2 class="modal-title">Book Service</h2>
+            <form id="serviceBookingForm">
+                <div class="form-group">
+                    <label for="serviceType">Service Type</label>
+                    <input type="text" class="form-control" id="serviceType" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDate">Preferred Date</label>
+                    <input type="date" class="form-control" id="serviceDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceTime">Preferred Time</label>
+                    <input type="time" class="form-control" id="serviceTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerName">Your Name</label>
+                    <input type="text" class="form-control" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" class="form-control" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <textarea class="form-control" id="customerAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="specialInstructions">Special Instructions (Optional)</label>
+                    <textarea class="form-control" id="specialInstructions" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Booking</button>
+            </form>
+        </div>
     </div>
-  </footer>
 
-  <!-- Bottom Navigation - Fixed Typos -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active">
-      <i class="fas fa-home"></i>
-      <span>Home</span>
-    </button>
-    <button class="nav-btn" onclick="location.href='games.html'">
-      <i class="fas fa-gamepad"></i>
-      <span>Games</span>
-    </button>
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Welcome Back</h2>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="register">Register</div>
+            </div>
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" class="form-control" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" class="form-control" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" class="form-control" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Phone Number</label>
+                    <input type="tel" class="form-control" id="registerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" class="form-control" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+            </form>
+        </div>
+    </div>
 
-    <button class="nav-btn" onclick="location.href='friends.html'" > <!-- Fixed -->
-      <i class="fas fa-user-friends"></i>
-      <span>Friends</span>
-    </button>
-    <button class="nav-btn" onclick="location.href='leaderboard.html'">
-      <i class="fas fa-trophy"></i>
-      <span>Leaderboard</span>
-    </button>
-  </nav>
+    <script>
+        // Firebase configuration
+        // Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBcmx6Yy6NizYwdEXPwUEuQNePrQvGDPnA",
+    authDomain: "ardon-5be08.firebaseapp.com",
+    projectId: "ardon-5be08",
+    storageBucket: "ardon-5be08.firebasestorage.app",
+    messagingSenderId: "691707049563",
+    appId: "1:691707049563:web:7b2c33cf235fcd9247b17e",
+    measurementId: "G-YVGJZ11VLE"
+};
 
-  <!-- SEO-Enhanced JS: Add alt texts, search func, mobile menu -->
-  <script>
-    // Sample games with alt texts for SEO
-    const games = [
-      { title: 'Agar.io Clone', author: 'IGS Studios', rating: 4.8, image: 'https://via.placeholder.com/200x80?text=Agar.io', badge: 'New', alt: 'Free .io game like Agar.io - multiplayer online battle' },
-      { title: 'Slither.io Battle', author: 'Pixel Forge', rating: 4.5, image: 'https://via.placeholder.com/200x80?text=Slither.io', badge: 'Hot', alt: 'Addictive .io web game - grow your snake online' },
-      { title: 'Diep.io Tanks', author: 'Cosmic Games', rating: 4.9, image: 'https://via.placeholder.com/200x80?text=Diep.io', badge: 'Top', alt: 'Popular .io game - control tanks in browser multiplayer' },
-      { title: 'Puzzle Web Game', author: 'IGS', rating: 4.7, image: 'https://via.placeholder.com/200x80?text=Puzzle', badge: 'Free', alt: 'Free online puzzle web game - no download required' }
-    ];
-</script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCRtPZ34Y1J-p5b7FJxEUagYg3h_D6PbhM",
-      authDomain: "igsfogstudio-df541.firebaseapp.com",
-      projectId: "igsfogstudio-df541",
-      storageBucket: "igsfogstudio-df541.appspot.com",
-      messagingSenderId: "206722625476",
-      appId: "1:206722625476:web:c222830b5404f87bf57e91",
-      measurementId: "G-1JL82Z0FK0"
-    };
+// DOM Elements
+const menuBtn = document.querySelector('.menu-btn');
+const sidebar = document.querySelector('.sidebar');
+const closeSidebar = document.querySelector('.close-sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const loginBtn = document.getElementById('loginBtn');
+const bookNowBtn = document.getElementById('bookNowBtn');
+const loginModal = document.getElementById('loginModal');
+const serviceDetailsModal = document.getElementById('serviceDetailsModal');
+const closeModalBtns = document.querySelectorAll('.close-modal');
+const authTabs = document.querySelectorAll('.auth-tab');
+const authForms = document.querySelectorAll('.auth-form');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const serviceBookingForm = document.getElementById('serviceBookingForm');
+const categoriesGrid = document.getElementById('categoriesGrid');
+const servicesGrid = document.getElementById('servicesGrid');
+const loader = document.getElementById('loader');
+const successMessage = document.getElementById('successMessage');
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+// User state
+let currentUser = null;
+let selectedService = null;
+let selectedServicePrice = null;
+let selectedServiceName = null;
+let servicesData = [];
 
-    const gamesContainer = document.getElementById("gamesContainer");
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
+// Sidebar toggle functionality
+menuBtn.addEventListener('click', () => {
+    sidebar.classList.add('active');
+    sidebarOverlay.classList.add('active');
+});
 
-    // Toggle mobile menu
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
+closeSidebar.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+});
+
+sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+});
+
+// Close modals
+closeModalBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        serviceDetailsModal.style.display = 'none';
     });
+});
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-        mobileMenu.classList.remove('active');
-      }
-    });
-
-    async function loadCloudGames() {
-      try {
-        const querySnapshot = await getDocs(collection(db, "games"));
-        const cloudGames = [];
+// Auth tabs switching
+authTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
         
-        querySnapshot.forEach(doc => {
-          const gameData = doc.data();
-          if (gameData.category === "Cloud Games") {
-            gameData.id = doc.id;
-            cloudGames.push(gameData);
-          }
+        // Update active tab
+        authTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Show corresponding form
+        authForms.forEach(form => {
+            form.classList.remove('active');
+            if (form.id === `${tabName}Form`) {
+                form.classList.add('active');
+            }
         });
+    });
+});
 
-        displayGames(cloudGames);
-      } catch (error) {
-        console.error("Error loading games:", error);
-        gamesContainer.innerHTML = `<p>Error loading games. Please try again later.</p>`;
-      }
-    }
+// Login form submission
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    showLoader();
+    
+    // Firebase authentication
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            hideLoader();
+            currentUser = userCredential.user;
+            updateUIForUser();
+            loginModal.style.display = 'none';
+            showSuccessMessage("Login successful!");
+            
+            // If a service was selected before login, open the booking modal
+            if (selectedService) {
+                openServiceDetailsModal(selectedService, selectedServicePrice, selectedServiceName);
+            }
+        })
+        .catch((error) => {
+            hideLoader();
+            showSuccessMessage("Login failed: " + error.message);
+        });
+});
 
-    function createGameCard(game) {
-      const card = document.createElement("div");
-      card.className = "game-card";
-      card.onclick = () => {
-        location.href = `gamecg.html?id=${game.id}`;
-      };
-      
-      // Generate a random rating for demo purposes
-      const rating = (Math.random() * 1 + 4).toFixed(1);
-      const stars = Math.round(rating);
-      
-      card.innerHTML = `
-        ${game.featured ? '<div class="game-badge">Featured</div>' : ''}
-        <img src="${game.gameLogoUrl || 'https://via.placeholder.com/180x140/2d3436/6c5ce7?text=Game'}" alt="${game.gameName || 'Game'}" loading="lazy" />
-        <div class="game-title">${game.gameName || "Unnamed Game"}</div>
-        <div class="game-author">${game.uploaderName || "Unknown Developer"}</div>
-        <div class="game-rating">
-          <span>${rating}</span>
-          <div>
-            ${'★'.repeat(stars)}${'☆'.repeat(5-stars)}
-          </div>
-        </div>
-      `;
-      return card;
-    }
-
-    function displayGames(games) {
-      gamesContainer.innerHTML = "";
-      gamesContainer.className = "game-list";
-
-      if (games.length === 0) {
-        gamesContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--gray);">No cloud games available at the moment.</p>`;
+// Register form submission
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const phone = document.getElementById('registerPhone').value;
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+    
+    if (password !== confirmPassword) {
+        showSuccessMessage("Passwords do not match!");
         return;
-      }
-
-      games.forEach(game => {
-        gamesContainer.appendChild(createGameCard(game));
-      });
     }
+    
+    showLoader();
+    
+    // Firebase authentication
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Save additional user data to Firestore
+            return db.collection('users').doc(userCredential.user.uid).set({
+                name: name,
+                email: email,
+                phone: phone,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            hideLoader();
+            currentUser = auth.currentUser;
+            updateUIForUser();
+            loginModal.style.display = 'none';
+            showSuccessMessage("Registration successful!");
+            
+            // If a service was selected before registration, open the booking modal
+            if (selectedService) {
+                openServiceDetailsModal(selectedService, selectedServicePrice, selectedServiceName);
+            }
+        })
+        .catch((error) => {
+            hideLoader();
+            showSuccessMessage("Registration failed: " + error.message);
+        });
+});
 
-    // Category filtering functionality
-    document.querySelectorAll('.category').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.category').forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
+// Service booking form submission
+serviceBookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (!currentUser) {
+        showSuccessMessage("Please login to book services");
+        return;
+    }
+    
+    const serviceType = document.getElementById('serviceType').value;
+    const serviceDate = document.getElementById('serviceDate').value;
+    const serviceTime = document.getElementById('serviceTime').value;
+    const customerName = document.getElementById('customerName').value;
+    const customerPhone = document.getElementById('customerPhone').value;
+    const customerAddress = document.getElementById('customerAddress').value;
+    const specialInstructions = document.getElementById('specialInstructions').value;
+    
+    showLoader();
+    
+    // Generate document ID with date format
+    const today = new Date();
+    const dateString = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
+    const docId = `request_${dateString}_${Date.now()}`;
+    
+    // Save booking to Firestore
+    db.collection('requests').doc(docId).set({
+        serviceType: serviceType,
+        serviceName: selectedServiceName,
+        serviceDate: serviceDate,
+        serviceTime: serviceTime,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerAddress: customerAddress,
+        specialInstructions: specialInstructions,
+        price: selectedServicePrice,
+        userId: currentUser.uid,
+        userEmail: currentUser.email,
+        status: 'pending',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        bookingDate: dateString
+    })
+    .then(() => {
+        hideLoader();
+        serviceDetailsModal.style.display = 'none';
+        showSuccessMessage("Booking confirmed! Our beauty expert will contact you soon.");
         
-        // In a real implementation, this would filter the games
-        // For now, we'll just reload the games to show the effect
-        gamesContainer.innerHTML = `<div class="loading" style="grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i><p>Filtering games...</p></div>`;
-        
-        setTimeout(() => {
-          loadCloudGames();
-        }, 500);
-      });
+        // Reset form and selected service
+        serviceBookingForm.reset();
+        selectedService = null;
+        selectedServicePrice = null;
+        selectedServiceName = null;
+    })
+    .catch((error) => {
+        hideLoader();
+        showSuccessMessage("Booking failed: " + error.message);
+    });
+});
+
+// Login button click handler
+loginBtn.addEventListener('click', () => {
+    loginModal.style.display = 'flex';
+});
+
+// Book Now button click handler
+bookNowBtn.addEventListener('click', () => {
+    document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
+});
+
+// Explore button click handler
+document.getElementById('exploreBtn').addEventListener('click', () => {
+    document.querySelector('.categories-section').scrollIntoView({ behavior: 'smooth' });
+});
+
+// Function to open service details modal
+function openServiceDetailsModal(serviceId, price, serviceName) {
+    const serviceNameElement = document.getElementById('selectedServiceName');
+    const servicePriceElement = document.getElementById('selectedServicePrice');
+    const serviceTypeElement = document.getElementById('serviceType');
+    
+    serviceNameElement.textContent = serviceName;
+    servicePriceElement.textContent = `₹${price}`;
+    serviceTypeElement.value = serviceName;
+    
+    // Pre-fill user details if available
+    if (currentUser) {
+        // Get user data from Firestore
+        db.collection('users').doc(currentUser.uid).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    document.getElementById('customerName').value = userData.name || '';
+                    document.getElementById('customerPhone').value = userData.phone || '';
+                    document.getElementById('customerAddress').value = userData.address || '';
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting user data:", error);
+            });
+    }
+    
+    serviceDetailsModal.style.display = 'flex';
+}
+
+// Function to update UI based on user login state
+function updateUIForUser() {
+    if (currentUser) {
+        loginBtn.style.display = 'none';
+        bookNowBtn.style.display = 'block';
+    } else {
+        loginBtn.style.display = 'block';
+        bookNowBtn.style.display = 'none';
+    }
+}
+
+// Function to show loader
+function showLoader() {
+    loader.style.display = 'flex';
+}
+
+// Function to hide loader
+function hideLoader() {
+    loader.style.display = 'none';
+}
+
+// Function to show success message
+function showSuccessMessage(message) {
+    successMessage.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+    successMessage.style.display = 'block';
+    
+    setTimeout(() => {
+        successMessage.style.display = 'none';
+    }, 3000);
+}
+
+// Function to load services from Firestore
+function loadServices() {
+    showLoader();
+    
+    db.collection('services').get()
+        .then((querySnapshot) => {
+            servicesData = [];
+            categoriesGrid.innerHTML = '';
+            servicesGrid.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                // If no services in Firestore, create default services
+                createDefaultServices();
+                return;
+            }
+            
+            querySnapshot.forEach((doc) => {
+                const service = doc.data();
+                service.id = doc.id;
+                servicesData.push(service);
+                
+                // Create category circle
+                const categoryCircle = document.createElement('div');
+                categoryCircle.className = 'category-circle';
+                categoryCircle.setAttribute('data-category', service.id);
+                categoryCircle.setAttribute('data-price', service.price);
+                
+                categoryCircle.innerHTML = `
+                    <div class="category-icon">
+                        <i class="${service.icon || 'fas fa-spa'}"></i>
+                    </div>
+                    <div class="category-name">${service.name}</div>
+                    <div class="category-price">₹${service.price}</div>
+                `;
+                
+                categoryCircle.addEventListener('click', () => {
+                    // If user is logged in, open service details directly
+                    if (currentUser) {
+                        openServiceDetailsModal(service.id, service.price, service.name);
+                    } else {
+                        // Store selected service and open login modal
+                        selectedService = service.id;
+                        selectedServicePrice = service.price;
+                        selectedServiceName = service.name;
+                        loginModal.style.display = 'flex';
+                    }
+                });
+                
+                categoriesGrid.appendChild(categoryCircle);
+                
+                // Create service card
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                
+                serviceCard.innerHTML = `
+                    <img src="${service.image || 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'}" alt="${service.name}" class="service-img">
+                    <div class="service-content">
+                        <h3>${service.name}</h3>
+                        <p>${service.description || 'Professional beauty service at your doorstep.'}</p>
+                        <div class="service-meta">
+                            <div class="price">₹${service.price}</div>
+                            <button class="btn btn-primary book-service" data-service="${service.id}" data-price="${service.price}" data-name="${service.name}">Book Now</button>
+                        </div>
+                    </div>
+                `;
+                
+                servicesGrid.appendChild(serviceCard);
+            });
+            
+            // Add event listeners to book service buttons
+            const bookServiceBtns = document.querySelectorAll('.book-service');
+            bookServiceBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const service = btn.getAttribute('data-service');
+                    const price = btn.getAttribute('data-price');
+                    const name = btn.getAttribute('data-name');
+                    
+                    // If user is logged in, open service details directly
+                    if (currentUser) {
+                        openServiceDetailsModal(service, price, name);
+                    } else {
+                        // Store selected service and open login modal
+                        selectedService = service;
+                        selectedServicePrice = price;
+                        selectedServiceName = name;
+                        loginModal.style.display = 'flex';
+                    }
+                });
+            });
+            
+            hideLoader();
+        })
+        .catch((error) => {
+            hideLoader();
+            console.error("Error loading services:", error);
+            showSuccessMessage("Failed to load services. Please try again.");
+        });
+}
+
+// Function to create default services if none exist
+function createDefaultServices() {
+    const defaultServices = [
+        {
+            id: 'facial',
+            name: 'Facial',
+            price: 1499,
+            description: 'Revitalizing facial treatment for glowing skin',
+            icon: 'fas fa-spa'
+        },
+        {
+            id: 'mehndi',
+            name: 'Mehndi',
+            price: 2999,
+            description: 'Beautiful traditional henna designs',
+            icon: 'fas fa-hand-sparkles'
+        },
+        {
+            id: 'bridal',
+            name: 'Bridal',
+            price: 8999,
+            description: 'Complete bridal makeup package',
+            icon: 'fas fa-crown'
+        },
+        {
+            id: 'makeup',
+            name: 'Makeup',
+            price: 2499,
+            description: 'Professional makeup application',
+            icon: 'fas fa-palette'
+        },
+        {
+            id: 'hair-styling',
+            name: 'Hair Styling',
+            price: 1299,
+            description: 'Expert hair styling and treatment',
+            icon: 'fas fa-cut'
+        },
+        {
+            id: 'threading',
+            name: 'Threading',
+            price: 399,
+            description: 'Precise eyebrow and facial threading',
+            icon: 'fas fa-brush'
+        }
+    ];
+
+    const batch = db.batch();
+
+    defaultServices.forEach(service => {
+        const serviceRef = db.collection('services').doc(service.id);
+        batch.set(serviceRef, {
+            name: service.name,
+            price: service.price,
+            description: service.description,
+            icon: service.icon,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
     });
 
-    // Search functionality
-    document.querySelector('.search-container input').addEventListener('input', function(e) {
-      const searchTerm = e.target.value.toLowerCase();
-      
-      // In a real implementation, this would search the games
-      // For now, we'll just show a loading state
-      if (searchTerm.length > 2) {
-        gamesContainer.innerHTML = `<div class="loading" style="grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i><p>Searching games...</p></div>`;
-        
-        setTimeout(() => {
-          loadCloudGames();
-        }, 500);
-      }
-    });
+    batch.commit()
+        .then(() => {
+            console.log("Default services created successfully");
+            loadServices(); // Reload services after creating defaults
+        })
+        .catch((error) => {
+            console.error("Error creating default services:", error);
+            hideLoader();
+        });
+}
 
-    // Bottom navigation functionality
-    document.querySelectorAll('.nav-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        
-        // In a real implementation, this would navigate to different pages
-        // For now, we'll just show a message
-        const pageName = this.querySelector('span').textContent;
-        console.log(`Navigating to ${pageName} page`);
-      });
+// Initialize the application
+function initApp() {
+    updateUIForUser();
+    loadServices();
+    
+    // Set up auth state listener
+    auth.onAuthStateChanged((user) => {
+        currentUser = user;
+        updateUIForUser();
     });
+}
 
-    // Initialize the page
-    loadCloudGames();
-  </script>
+// Start the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
-  </html>
+</html>
