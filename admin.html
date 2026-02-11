@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPlay · admin uploader</title>
+    <!-- Font & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0b0f;
+            color: #f0f0fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .admin-container {
+            max-width: 700px;
+            width: 100%;
+            background: #14141c;
+            border-radius: 32px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 40px -15px black;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        h1 span {
+            color: #e50914;
+        }
+        .sub {
+            color: #a0a0b0;
+            margin-bottom: 2rem;
+            border-left: 4px solid #e50914;
+            padding-left: 1rem;
+        }
+        .login-form, .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        input, textarea {
+            background: #1e1e28;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 0.9rem 1.2rem;
+            font-size: 1rem;
+            color: white;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #e50914;
+            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
+            background: #24242f;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            background: #e50914;
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 1rem;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn:hover {
+            background: #b2070f;
+            transform: scale(1.02);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #4b5563;
+            color: #f0f0fa;
+            margin-top: 0;
+        }
+        .btn-outline:hover {
+            background: #2d2d3a;
+            border-color: #e50914;
+            transform: none;
+        }
+        .message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 16px;
+            background: #1e1e28;
+            border-left: 6px solid #3b82f6;
+            color: #e2e8f0;
+            font-weight: 500;
+            display: none;
+        }
+        .message.success {
+            border-left-color: #22c55e;
+            display: block;
+        }
+        .message.error {
+            border-left-color: #ef4444;
+            display: block;
+        }
+        .info-hint {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 0.25rem;
+        }
+        .divider {
+            border-top: 1px solid #2c2c36;
+            margin: 1.5rem 0;
+        }
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .user-badge {
+            background: #2a2a35;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        a {
+            color: #94a3b8;
+            text-decoration: none;
+        }
+        a:hover {
+            color: white;
+        }
+        .logo-small {
+            width: 40px;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- HEADER -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <img src="https://placehold.co/80x40/0d0d17/e50914?text=CGPLAY&font=montserrat" class="logo-small" alt="logo">
+            <h1><span>CGP</span>LAY · uploader</h1>
+        </div>
+        <div class="sub">
+            <i class="fas fa-cloud-upload-alt"></i> add new movies to Firestore – secure admin
+        </div>
+
+        <!-- ========== LOGIN / AUTH SECTION ========== -->
+        <div id="authSection">
+            <!-- Login form (visible when not authenticated) -->
+            <div id="loginFormDiv">
+                <div style="margin-bottom: 1.5rem; background: #1a1a24; padding: 1.2rem; border-radius: 20px;">
+                    <i class="fas fa-shield-alt" style="color: #60a5fa;"></i> 
+                    <span style="font-weight: 600;">Admin authentication required</span>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #b0b8c0;">Use your Firebase Auth email/password. 
+                    <br>👉 Enable <strong>Email/Password</strong> in Firebase Console → Authentication.</p>
+                </div>
+                <div class="login-form">
+                    <div class="input-group">
+                        <label><i class="far fa-envelope"></i> Email</label>
+                        <input type="email" id="loginEmail" placeholder="admin@cgplay.com" autocomplete="email">
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••">
+                    </div>
+                    <button id="loginBtn" class="btn">
+                        <i class="fas fa-sign-in-alt"></i> Login & access uploader
+                    </button>
+                </div>
+            </div>
+
+            <!-- Authenticated state (hidden until login) -->
+            <div id="authenticatedPanel" style="display: none;">
+                <div class="flex-row" style="justify-content: space-between; margin-bottom: 1.5rem;">
+                    <div class="user-badge">
+                        <i class="fas fa-check-circle" style="color: #22c55e;"></i> 
+                        Logged in as <span id="userEmailDisplay">admin@cgplay.com</span>
+                    </div>
+                    <button id="logoutBtn" class="btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+
+                <!-- ========== MOVIE UPLOAD FORM ========== -->
+                <div style="margin-top: 1rem;">
+                    <h3 style="margin-bottom: 1.2rem; display: flex; gap: 0.5rem;">
+                        <i class="fas fa-film" style="color: #e50914;"></i> Add new movie
+                    </h3>
+                    <div class="upload-form">
+                        <div class="input-group">
+                            <label><i class="fas fa-heading"></i> Movie name *</label>
+                            <input type="text" id="movieName" placeholder="e.g. Dune: Part Two">
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-image"></i> Poster / Logo URL *</label>
+                            <input type="url" id="logoUrl" placeholder="https://...poster.jpg">
+                            <span class="info-hint">direct link to poster image (2:3 ratio works best)</span>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-camera"></i> Screenshot URL</label>
+                            <input type="url" id="screenshotUrl" placeholder="https://...scene.jpg">
+                            <span class="info-hint">16:9 screenshot (optional)</span>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-download"></i> Download link *</label>
+                            <input type="url" id="downloadUrl" placeholder="https://filebase.com/movie.mp4">
+                            <span class="info-hint">direct download URL (file base, etc.)</span>
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-align-left"></i> Description *</label>
+                            <textarea id="description" placeholder="Short plot summary..."></textarea>
+                        </div>
+                        <button id="uploadBtn" class="btn">
+                            <i class="fas fa-cloud-upload-alt"></i> Publish movie
+                        </button>
+                    </div>
+                    <div id="uploadMessage" class="message">
+                        <!-- dynamic message -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div style="text-align: center; color: #6b7280; font-size: 0.85rem;">
+            <i class="fas fa-database"></i> Firestore collection: <code style="background: #1e1e28; padding: 0.2rem 0.5rem; border-radius: 8px;">movies</code>
+            · <a href="#" onclick="window.open('https://console.firebase.google.com/project/cgplay-a2384/firestore/data', '_blank')">open console</a>
+        </div>
+    </div>
+
+    <!-- ========== FIREBASE SDK (same config) ========== -->
+    <script type="module">
+        // ---------- 1. IMPORT FIREBASE MODULES ----------
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+        // ---------- 2. YOUR FIREBASE CONFIGURATION ----------
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYV2Wbo67_iqvMrmH9vT_4F4kYBKRLFWA",
+            authDomain: "cgplay-a2384.firebaseapp.com",
+            projectId: "cgplay-a2384",
+            storageBucket: "cgplay-a2384.firebasestorage.app",
+            messagingSenderId: "778930899763",
+            appId: "1:778930899763:web:0edca39ca044d421cf8c46",
+            measurementId: "G-X16NPMVFFQ"
+        };
+
+        // ---------- 3. INITIALIZE ----------
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // ---------- 4. DOM ELEMENTS ----------
+        const loginFormDiv = document.getElementById('loginFormDiv');
+        const authPanel = document.getElementById('authenticatedPanel');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userEmailDisplay = document.getElementById('userEmailDisplay');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadMessage = document.getElementById('uploadMessage');
+
+        // ---------- 5. AUTH STATE OBSERVER ----------
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                loginFormDiv.style.display = 'none';
+                authPanel.style.display = 'block';
+                userEmailDisplay.textContent = user.email;
+                uploadMessage.style.display = 'none'; // hide old messages
+            } else {
+                // User is signed out
+                loginFormDiv.style.display = 'block';
+                authPanel.style.display = 'none';
+            }
+        });
+
+        // ---------- 6. LOGIN ----------
+        loginBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // onAuthStateChanged will update UI
+                loginEmail.value = '';
+                loginPassword.value = '';
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed: ' + error.message);
+            }
+        });
+
+        // ---------- 7. LOGOUT ----------
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // ---------- 8. UPLOAD MOVIE (add to Firestore) ----------
+        uploadBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            // Get values
+            const name = document.getElementById('movieName').value.trim();
+            const logoUrl = document.getElementById('logoUrl').value.trim();
+            const screenshotUrl = document.getElementById('screenshotUrl').value.trim();
+            const downloadUrl = document.getElementById('downloadUrl').value.trim();
+            const description = document.getElementById('description').value.trim();
+
+            // Basic validation
+            if (!name || !logoUrl || !downloadUrl || !description) {
+                showMessage('Please fill all required fields (name, poster, download link, description).', 'error');
+                return;
+            }
+
+            // Disable button during upload
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> publishing...';
+
+            try {
+                // Add document to "movies" collection
+                const docRef = await addDoc(collection(db, 'movies'), {
+                    name: name,
+                    logoUrl: logoUrl,
+                    screenshotUrl: screenshotUrl || null,  // optional
+                    downloadUrl: downloadUrl,
+                    description: description,
+                    createdAt: new Date().toISOString()     // helpful timestamp
+                });
+
+                showMessage(`✅ Movie "${name}" added successfully! Document ID: ${docRef.id}`, 'success');
+                
+                // Clear form
+                document.getElementById('movieName').value = '';
+                document.getElementById('logoUrl').value = '';
+                document.getElementById('screenshotUrl').value = '';
+                document.getElementById('downloadUrl').value = '';
+                document.getElementById('description').value = '';
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish movie';
+            }
+        });
+
+        // Helper to show message
+        function showMessage(msg, type = 'success') {
+            uploadMessage.textContent = msg;
+            uploadMessage.className = 'message ' + type;
+            uploadMessage.style.display = 'block';
+            setTimeout(() => {
+                uploadMessage.style.display = 'none';
+            }, 6000);
+        }
+    </script>
+
+    <!-- ========== UPDATED FIRESTORE RULES ========== 
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        // Movies: public read, only authenticated users can write
+        match /movies/{movieId} {
+          allow read: if true;
+          allow write: if request.auth != null;
+        }
+        // Deny everything else
+        match /{document=**} {
+          allow read, write: if false;
+        }
+      }
+    }
+    ================================================= -->
+    <!-- 
+        🔐 HOW TO SET UP ADMIN ACCOUNT:
+        1. Go to Firebase Console → Authentication → Sign-in method → enable Email/Password.
+        2. In "Users" tab, add a user (e.g., admin@cgplay.com / strong password).
+        3. Update Firestore rules with the rules above (copy & paste).
+        4. Now you can login and add movies directly from this page!
+    -->
+</body>
+</html>
