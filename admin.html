@@ -2,66 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGPlay · admin uploader</title>
-    <!-- Font & Icons -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>CGPlay · admin uploader (full schema)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* ---------- CGPLAY – CINEMA DARK THEME – ADMIN PANEL (FULLY RESPONSIVE) ---------- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: #0b0b0f;
+            background: #0a0a0e;
+            background: radial-gradient(circle at 30% 10%, #14141c 0%, #0b0b10 90%);
             color: #f0f0fa;
+            line-height: 1.5;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
+            padding: 1.5rem;
         }
+
         .admin-container {
-            max-width: 700px;
+            max-width: 1200px;
             width: 100%;
             background: #14141c;
             border-radius: 32px;
             padding: 2.5rem;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 25px 40px -15px black;
             backdrop-filter: blur(10px);
+            transition: all 0.2s;
         }
+
         h1 {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -1px;
             margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            background: linear-gradient(to right, #ffffff, #d4d4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
+
         h1 span {
             color: #e50914;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
         }
+
         .sub {
             color: #a0a0b0;
             margin-bottom: 2rem;
             border-left: 4px solid #e50914;
             padding-left: 1rem;
+            font-size: 1rem;
         }
+
+        /* ---------- LOGIN / UPLOAD FORMS ---------- */
         .login-form, .upload-form {
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
         }
+
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
+
         label {
             font-weight: 600;
             font-size: 0.9rem;
@@ -70,33 +91,38 @@
             align-items: center;
             gap: 0.5rem;
         }
+
         input, textarea {
             background: #1e1e28;
             border: 1px solid #334155;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 0.9rem 1.2rem;
             font-size: 1rem;
             color: white;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
+            width: 100%;
         }
+
         input:focus, textarea:focus {
             outline: none;
             border-color: #e50914;
-            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
             background: #24242f;
         }
+
         textarea {
-            min-height: 100px;
+            min-height: 90px;
             resize: vertical;
         }
+
         .btn {
             background: #e50914;
             border: none;
             color: white;
             font-weight: 700;
-            padding: 1rem;
-            border-radius: 40px;
+            padding: 1rem 1.8rem;
+            border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: background 0.2s, transform 0.1s;
@@ -104,99 +130,230 @@
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            margin-top: 0.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+            width: 100%;
         }
+
         .btn:hover {
             background: #b2070f;
             transform: scale(1.02);
         }
+
         .btn-outline {
             background: transparent;
             border: 1px solid #4b5563;
             color: #f0f0fa;
-            margin-top: 0;
+            box-shadow: none;
         }
+
         .btn-outline:hover {
             background: #2d2d3a;
             border-color: #e50914;
             transform: none;
         }
+
         .message {
             margin-top: 1.5rem;
-            padding: 1rem;
-            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
             background: #1e1e28;
             border-left: 6px solid #3b82f6;
             color: #e2e8f0;
             font-weight: 500;
             display: none;
+            word-break: break-word;
         }
+
         .message.success {
             border-left-color: #22c55e;
             display: block;
         }
+
         .message.error {
             border-left-color: #ef4444;
             display: block;
         }
+
         .info-hint {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #9ca3af;
             margin-top: 0.25rem;
+            padding-left: 0.5rem;
         }
+
         .divider {
             border-top: 1px solid #2c2c36;
-            margin: 1.5rem 0;
+            margin: 2rem 0 1.5rem;
         }
+
         .flex-row {
             display: flex;
             gap: 1rem;
             align-items: center;
             flex-wrap: wrap;
         }
+
+        /* ---------- GRID LAYOUTS ---------- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
         .user-badge {
             background: #2a2a35;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
             font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
+            border: 1px solid #4b5563;
+            backdrop-filter: blur(4px);
         }
+
         a {
             color: #94a3b8;
             text-decoration: none;
+            transition: color 0.2s;
         }
+
         a:hover {
             color: white;
         }
+
         .logo-small {
             width: 40px;
             height: auto;
             border-radius: 8px;
+            filter: drop-shadow(0 0 4px #e5091466);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 0.75rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid #2c2c36;
+            padding-bottom: 0.7rem;
+            color: #f0f0fa;
+        }
+
+        .section-title i {
+            color: #e50914;
+        }
+
+        /* ---------- RESPONSIVENESS – MOBILE FIRST ADJUSTMENTS ---------- */
+        @media (max-width: 900px) {
+            .admin-container {
+                padding: 2rem 1.8rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .admin-container {
+                padding: 1.8rem 1.5rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .sub {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .admin-container {
+                padding: 1.5rem 1.2rem;
+                border-radius: 24px;
+            }
+            h1 {
+                font-size: 1.4rem;
+                flex-wrap: wrap;
+            }
+            .logo-small {
+                width: 32px;
+            }
+            .btn {
+                padding: 0.9rem 1.2rem;
+                font-size: 1rem;
+            }
+            .flex-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            .user-badge {
+                width: 100%;
+                justify-content: center;
+            }
+            .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+            .section-title {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .admin-container {
+                padding: 1.2rem 1rem;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            input, textarea {
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ---------- UTILITIES ---------- */
+        .text-center {
+            text-align: center;
+        }
+        .mt-2 {
+            margin-top: 1rem;
+        }
+        .w-100 {
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <!-- HEADER -->
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
             <img src="https://placehold.co/80x40/0d0d17/e50914?text=CGPLAY&font=montserrat" class="logo-small" alt="logo">
             <h1><span>CGP</span>LAY · uploader</h1>
         </div>
         <div class="sub">
-            <i class="fas fa-cloud-upload-alt"></i> add new movies to Firestore – secure admin
+            <i class="fas fa-cloud-upload-alt"></i> add new movies to Firestore – full schema (poster, 2 screenshots, 3 qualities, metadata)
         </div>
 
         <!-- ========== LOGIN / AUTH SECTION ========== -->
         <div id="authSection">
             <!-- Login form (visible when not authenticated) -->
             <div id="loginFormDiv">
-                <div style="margin-bottom: 1.5rem; background: #1a1a24; padding: 1.2rem; border-radius: 20px;">
+                <div style="margin-bottom: 1.5rem; background: #1a1a24; padding: 1.2rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.03);">
                     <i class="fas fa-shield-alt" style="color: #60a5fa;"></i> 
                     <span style="font-weight: 600;">Admin authentication required</span>
-                    <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #b0b8c0;">Use your Firebase Auth email/password. 
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: #b0b8c0;">Use your Firebase Auth email/password. 
                     <br>👉 Enable <strong>Email/Password</strong> in Firebase Console → Authentication.</p>
                 </div>
                 <div class="login-form">
@@ -216,47 +373,118 @@
 
             <!-- Authenticated state (hidden until login) -->
             <div id="authenticatedPanel" style="display: none;">
-                <div class="flex-row" style="justify-content: space-between; margin-bottom: 1.5rem;">
+                <div class="flex-row" style="justify-content: space-between; margin-bottom: 1.8rem;">
                     <div class="user-badge">
                         <i class="fas fa-check-circle" style="color: #22c55e;"></i> 
                         Logged in as <span id="userEmailDisplay">admin@cgplay.com</span>
                     </div>
-                    <button id="logoutBtn" class="btn-outline" style="padding: 0.5rem 1.2rem; font-size: 0.9rem;">
+                    <button id="logoutBtn" class="btn-outline" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
                 </div>
 
-                <!-- ========== MOVIE UPLOAD FORM ========== -->
+                <!-- ========== MOVIE UPLOAD FORM (FULL SCHEMA) ========== -->
                 <div style="margin-top: 1rem;">
-                    <h3 style="margin-bottom: 1.2rem; display: flex; gap: 0.5rem;">
-                        <i class="fas fa-film" style="color: #e50914;"></i> Add new movie
+                    <h3 style="margin-bottom: 1.5rem; display: flex; gap: 0.6rem; font-size: 1.2rem; font-weight: 700;">
+                        <i class="fas fa-film" style="color: #e50914;"></i> Add new movie – all fields required unless marked optional
                     </h3>
+                    
                     <div class="upload-form">
-                        <div class="input-group">
-                            <label><i class="fas fa-heading"></i> Movie name *</label>
-                            <input type="text" id="movieName" placeholder="e.g. Dune: Part Two">
+                        <!-- Basic Info -->
+                        <div class="section-title"><i class="fas fa-info-circle"></i> Basic information</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-heading"></i> Movie name *</label>
+                                <input type="text" id="movieName" placeholder="e.g. Dune: Part Two">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-tag"></i> Year *</label>
+                                <input type="text" id="year" placeholder="2024">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-theater-masks"></i> Genre *</label>
+                                <input type="text" id="genre" placeholder="Sci‑Fi / Epic">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-clock"></i> Runtime *</label>
+                                <input type="text" id="runtime" placeholder="2h 46m">
+                            </div>
                         </div>
+
+                        <!-- Poster & Description -->
+                        <div class="section-title"><i class="fas fa-image"></i> Poster & Description</div>
                         <div class="input-group">
-                            <label><i class="fas fa-image"></i> Poster / Logo URL *</label>
+                            <label><i class="fas fa-image"></i> Poster URL (logoUrl) *</label>
                             <input type="url" id="logoUrl" placeholder="https://...poster.jpg">
                             <span class="info-hint">direct link to poster image (2:3 ratio works best)</span>
-                        </div>
-                        <div class="input-group">
-                            <label><i class="fas fa-camera"></i> Screenshot URL</label>
-                            <input type="url" id="screenshotUrl" placeholder="https://...scene.jpg">
-                            <span class="info-hint">16:9 screenshot (optional)</span>
-                        </div>
-                        <div class="input-group">
-                            <label><i class="fas fa-download"></i> Download link *</label>
-                            <input type="url" id="downloadUrl" placeholder="https://filebase.com/movie.mp4">
-                            <span class="info-hint">direct download URL (file base, etc.)</span>
                         </div>
                         <div class="input-group">
                             <label><i class="fas fa-align-left"></i> Description *</label>
                             <textarea id="description" placeholder="Short plot summary..."></textarea>
                         </div>
+
+                        <!-- Screenshots (two) -->
+                        <div class="section-title"><i class="fas fa-camera"></i> Screenshots (16:9 recommended)</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-camera"></i> Screenshot 1 URL *</label>
+                                <input type="url" id="screenshot1" placeholder="https://...scene1.jpg">
+                                <span class="info-hint">will be used on homepage</span>
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-camera"></i> Screenshot 2 URL *</label>
+                                <input type="url" id="screenshot2" placeholder="https://...scene2.jpg">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-scroll"></i> Caption 1 (optional)</label>
+                                <input type="text" id="screenshot1_caption" placeholder="e.g. Sandworm summoning">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-heart"></i> Caption 2 (optional)</label>
+                                <input type="text" id="screenshot2_caption" placeholder="e.g. Paul & Chani">
+                            </div>
+                        </div>
+
+                        <!-- Download links (three qualities) -->
+                        <div class="section-title"><i class="fas fa-download"></i> Download links (all required for full experience)</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-video"></i> 480p URL *</label>
+                                <input type="url" id="download480p" placeholder="https://...480p.mp4">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-hd-video"></i> 720p URL *</label>
+                                <input type="url" id="download720p" placeholder="https://...720p.mp4">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-film"></i> 1080p URL *</label>
+                                <input type="url" id="download1080p" placeholder="https://...1080p.mp4">
+                            </div>
+                        </div>
+
+                        <!-- Metadata (IMDB, Audio, Subtitles, Format) -->
+                        <div class="section-title"><i class="fas fa-tags"></i> Metadata (all required)</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-star"></i> IMDb Rating *</label>
+                                <input type="text" id="imdbRating" placeholder="8.9/10">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-language"></i> Audio *</label>
+                                <input type="text" id="audio" placeholder="English 5.1 / Hindi">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-subtitles"></i> Subtitles *</label>
+                                <input type="text" id="subtitles" placeholder="English, Spanish, Arabic">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-folder-open"></i> Format *</label>
+                                <input type="text" id="format" placeholder="MP4 / H.265">
+                            </div>
+                        </div>
+
                         <button id="uploadBtn" class="btn">
-                            <i class="fas fa-cloud-upload-alt"></i> Publish movie
+                            <i class="fas fa-cloud-upload-alt"></i> Publish movie to Firestore
                         </button>
                     </div>
                     <div id="uploadMessage" class="message">
@@ -267,7 +495,7 @@
         </div>
         <div class="divider"></div>
         <div style="text-align: center; color: #6b7280; font-size: 0.85rem;">
-            <i class="fas fa-database"></i> Firestore collection: <code style="background: #1e1e28; padding: 0.2rem 0.5rem; border-radius: 8px;">movies</code>
+            <i class="fas fa-database"></i> Firestore collection: <code style="background: #1e1e28; padding: 0.2rem 0.6rem; border-radius: 20px;">movies</code>
             · <a href="#" onclick="window.open('https://console.firebase.google.com/project/cgplay-a2384/firestore/data', '_blank')">open console</a>
         </div>
     </div>
@@ -311,13 +539,11 @@
         // ---------- 5. AUTH STATE OBSERVER ----------
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in
                 loginFormDiv.style.display = 'none';
                 authPanel.style.display = 'block';
                 userEmailDisplay.textContent = user.email;
-                uploadMessage.style.display = 'none'; // hide old messages
+                uploadMessage.style.display = 'none';
             } else {
-                // User is signed out
                 loginFormDiv.style.display = 'block';
                 authPanel.style.display = 'none';
             }
@@ -334,7 +560,6 @@
             }
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // onAuthStateChanged will update UI
                 loginEmail.value = '';
                 loginPassword.value = '';
             } catch (error) {
@@ -352,20 +577,32 @@
             }
         });
 
-        // ---------- 8. UPLOAD MOVIE (add to Firestore) ----------
+        // ---------- 8. UPLOAD MOVIE (full schema) ----------
         uploadBtn.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            // Get values
+            // Gather all fields
             const name = document.getElementById('movieName').value.trim();
+            const year = document.getElementById('year').value.trim();
+            const genre = document.getElementById('genre').value.trim();
+            const runtime = document.getElementById('runtime').value.trim();
             const logoUrl = document.getElementById('logoUrl').value.trim();
-            const screenshotUrl = document.getElementById('screenshotUrl').value.trim();
-            const downloadUrl = document.getElementById('downloadUrl').value.trim();
             const description = document.getElementById('description').value.trim();
+            const screenshot1 = document.getElementById('screenshot1').value.trim();
+            const screenshot2 = document.getElementById('screenshot2').value.trim();
+            const screenshot1_caption = document.getElementById('screenshot1_caption').value.trim() || 'Scene 1';
+            const screenshot2_caption = document.getElementById('screenshot2_caption').value.trim() || 'Scene 2';
+            const download480p = document.getElementById('download480p').value.trim();
+            const download720p = document.getElementById('download720p').value.trim();
+            const download1080p = document.getElementById('download1080p').value.trim();
+            const imdbRating = document.getElementById('imdbRating').value.trim();
+            const audio = document.getElementById('audio').value.trim();
+            const subtitles = document.getElementById('subtitles').value.trim();
+            const format = document.getElementById('format').value.trim();
 
-            // Basic validation
-            if (!name || !logoUrl || !downloadUrl || !description) {
-                showMessage('Please fill all required fields (name, poster, download link, description).', 'error');
+            // Validation – all marked with * are required
+            if (!name || !year || !genre || !runtime || !logoUrl || !description || !screenshot1 || !screenshot2 || !download480p || !download720p || !download1080p || !imdbRating || !audio || !subtitles || !format) {
+                showMessage('❌ Please fill all required fields (marked with *).', 'error');
                 return;
             }
 
@@ -374,31 +611,49 @@
             uploadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> publishing...';
 
             try {
-                // Add document to "movies" collection
-                const docRef = await addDoc(collection(db, 'movies'), {
-                    name: name,
-                    logoUrl: logoUrl,
-                    screenshotUrl: screenshotUrl || null,  // optional
-                    downloadUrl: downloadUrl,
-                    description: description,
-                    createdAt: new Date().toISOString()     // helpful timestamp
-                });
+                // Prepare document object – full schema
+                const movieData = {
+                    name,
+                    year,
+                    genre,
+                    runtime,
+                    logoUrl,
+                    description,
+                    screenshot1,
+                    screenshot2,
+                    screenshot1_caption,
+                    screenshot2_caption,
+                    download480p,
+                    download720p,
+                    download1080p,
+                    imdbRating,
+                    audio,
+                    subtitles,
+                    format,
+                    // Backwards compatibility
+                    screenshotUrl: screenshot1,
+                    downloadUrl: download1080p,
+                    createdAt: new Date().toISOString()
+                };
+
+                // Add to Firestore
+                const docRef = await addDoc(collection(db, 'movies'), movieData);
 
                 showMessage(`✅ Movie "${name}" added successfully! Document ID: ${docRef.id}`, 'success');
                 
-                // Clear form
-                document.getElementById('movieName').value = '';
-                document.getElementById('logoUrl').value = '';
-                document.getElementById('screenshotUrl').value = '';
-                document.getElementById('downloadUrl').value = '';
-                document.getElementById('description').value = '';
+                // Clear the entire form
+                document.querySelectorAll('input, textarea').forEach(el => {
+                    if (el.type !== 'button' && el.id !== 'loginEmail' && el.id !== 'loginPassword') {
+                        el.value = '';
+                    }
+                });
 
             } catch (error) {
                 console.error('Upload error:', error);
                 showMessage('❌ Error: ' + error.message, 'error');
             } finally {
                 uploadBtn.disabled = false;
-                uploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish movie';
+                uploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish movie to Firestore';
             }
         });
 
@@ -413,28 +668,5 @@
         }
     </script>
 
-    <!-- ========== UPDATED FIRESTORE RULES ========== 
-    rules_version = '2';
-    service cloud.firestore {
-      match /databases/{database}/documents {
-        // Movies: public read, only authenticated users can write
-        match /movies/{movieId} {
-          allow read: if true;
-          allow write: if request.auth != null;
-        }
-        // Deny everything else
-        match /{document=**} {
-          allow read, write: if false;
-        }
-      }
-    }
-    ================================================= -->
-    <!-- 
-        🔐 HOW TO SET UP ADMIN ACCOUNT:
-        1. Go to Firebase Console → Authentication → Sign-in method → enable Email/Password.
-        2. In "Users" tab, add a user (e.g., admin@cgplay.com / strong password).
-        3. Update Firestore rules with the rules above (copy & paste).
-        4. Now you can login and add movies directly from this page!
-    -->
 </body>
-</html>
+                                           </html>
