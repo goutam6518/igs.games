@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -98,7 +99,8 @@
             color: #cbd5e1;
             margin-bottom: 0.3rem;
         }
-        .input-group input {
+        .input-group input,
+        .input-group textarea {
             width: 100%;
             background: #1e1e28;
             border: 1px solid #334155;
@@ -106,19 +108,45 @@
             padding: 0.8rem 1.2rem;
             color: white;
             font-size: 1rem;
+            font-family: 'Inter', sans-serif;
         }
-        .input-group input:focus {
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #e50914;
+            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
+        }
+        textarea { resize: vertical; min-height: 70px; }
+
+        /* Search bar */
+        .search-bar {
+            display: flex;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .search-bar input {
+            flex: 1;
+            min-width: 200px;
+            background: #1e1e28;
+            border: 1px solid #334155;
+            border-radius: 40px;
+            padding: 0.8rem 1.5rem;
+            color: white;
+            font-size: 1rem;
+        }
+        .search-bar input:focus {
             outline: none;
             border-color: #e50914;
             box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
         }
 
-        /* Movie grid */
+        /* Movie grid – exactly 2 columns */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
-            margin-top: 2rem;
+            margin: 1.5rem 0;
         }
         .movie-card {
             background: #1a1a24;
@@ -174,6 +202,45 @@
             padding-top: 0.8rem;
         }
 
+        /* Pagination controls */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0 0.5rem;
+        }
+        .pagination button {
+            background: #1e1e28;
+            border: 1px solid #3a3a4a;
+            color: #f0f0fa;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pagination button:hover:not(:disabled) {
+            background: #e50914;
+            border-color: #e50914;
+        }
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .pagination .active-page {
+            background: #e50914;
+            border-color: #e50914;
+        }
+        .page-numbers {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         /* Modal */
         .modal {
             display: none;
@@ -217,6 +284,7 @@
             gap: 1rem;
         }
         .loading, .error {
+            grid-column: span 2;
             text-align: center;
             padding: 3rem;
             color: #9ca3af;
@@ -224,11 +292,16 @@
 
         @media (max-width: 700px) {
             .admin-container { padding: 1.5rem; }
-            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+            .movies-grid { gap: 1rem; }
+            .movie-poster { height: 150px; }
             .grid-2 { grid-template-columns: 1fr; }
         }
         @media (max-width: 500px) {
-            .movies-grid { grid-template-columns: 1fr; }
+            .movies-grid { gap: 0.8rem; }
+            .movie-poster { height: 130px; }
+            .movie-title { font-size: 1rem; }
+            .action-buttons { flex-direction: column; }
+            .action-buttons .btn { width: 100%; }
         }
     </style>
 </head>
@@ -239,7 +312,7 @@
             <div id="authState"></div>
         </div>
         <div class="sub">
-            <i class="fas fa-database"></i> list, edit, delete movies in Firestore
+            <i class="fas fa-database"></i> list, edit, delete movies – 2 columns, 10 per page
         </div>
 
         <!-- LOGIN FORM (shown when not authenticated) -->
@@ -266,15 +339,24 @@
                     Logged in as <span id="userEmailDisplay"></span>
                 </div>
                 <div>
-                    <a href="admin.html" class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> Add new movie</a>
+                    <a href="admin-uploader.html" class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> Add new movie</a>
                     <button id="logoutBtn" class="btn btn-outline btn-sm"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
             </div>
 
-            <!-- MOVIE LIST -->
+            <!-- Search bar -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by name or description...">
+                <button id="searchBtn" class="btn"><i class="fas fa-search"></i> Search</button>
+            </div>
+
+            <!-- MOVIE LIST (grid) -->
             <div id="moviesList" class="movies-grid">
                 <div class="loading"><i class="fas fa-spinner fa-pulse"></i> loading movies...</div>
             </div>
+
+            <!-- PAGINATION CONTROLS -->
+            <div id="paginationContainer" class="pagination"></div>
         </div>
     </div>
 
@@ -374,7 +456,7 @@
     <!-- Firebase SDK (modular) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -394,20 +476,27 @@
         // DOM elements
         const loginSection = document.getElementById('loginSection');
         const adminPanel = document.getElementById('adminPanel');
-        const authState = document.getElementById('authState');
         const userEmailSpan = document.getElementById('userEmailDisplay');
         const loginBtn = document.getElementById('loginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const loginEmail = document.getElementById('loginEmail');
         const loginPassword = document.getElementById('loginPassword');
         const moviesListDiv = document.getElementById('moviesList');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const paginationDiv = document.getElementById('paginationContainer');
 
         // Modal elements
         const editModal = document.getElementById('editModal');
         const closeModal = document.getElementById('closeModal');
         const editForm = document.getElementById('editForm');
         const editDocId = document.getElementById('edit_docId');
-        // ... all edit fields (already in HTML)
+
+        // State
+        let allMovies = [];
+        let filteredMovies = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
 
         // Auth state observer
         onAuthStateChanged(auth, (user) => {
@@ -419,7 +508,8 @@
             } else {
                 loginSection.style.display = 'block';
                 adminPanel.style.display = 'none';
-                moviesListDiv.innerHTML = ''; // clear
+                moviesListDiv.innerHTML = '';
+                paginationDiv.innerHTML = '';
             }
         });
 
@@ -445,66 +535,168 @@
             moviesListDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-pulse"></i> loading movies...</div>';
             try {
                 const querySnapshot = await getDocs(collection(db, 'movies'));
-                if (querySnapshot.empty) {
-                    moviesListDiv.innerHTML = '<div class="loading">📭 No movies found. <a href="admin.html" style="color:#e50914;">Add one</a></div>';
-                    return;
-                }
-                let html = '';
+                allMovies = [];
                 querySnapshot.forEach(docSnap => {
-                    const m = docSnap.data();
-                    const id = docSnap.id;
-                    html += `
-                        <div class="movie-card" data-id="${id}">
-                            <img src="${m.logoUrl || 'https://placehold.co/600x900/1f1f2a/aaa?text=NO+POSTER'}" class="movie-poster" loading="lazy">
-                            <div class="movie-info">
-                                <div class="movie-title">${m.name || 'Untitled'}</div>
-                                <div class="movie-meta">
-                                    <span><i class="far fa-calendar"></i> ${m.year || '?'}</span>
-                                    <span><i class="fas fa-star" style="color:#e50914;"></i> ${m.imdbRating || '?'}</span>
-                                </div>
-                                ${m.screenshot1 ? `<img src="${m.screenshot1}" class="screenshot-thumb" loading="lazy">` : ''}
-                                <div class="action-buttons">
-                                    <button class="btn btn-sm edit-btn" data-id="${id}"><i class="fas fa-edit"></i> Edit</button>
-                                    <button class="btn btn-sm btn-outline delete-btn" data-id="${id}" data-name="${m.name}"><i class="fas fa-trash"></i> Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+                    allMovies.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                moviesListDiv.innerHTML = html;
-
-                // Attach edit events
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.dataset.id;
-                        openEditModal(id);
-                    });
-                });
-
-                // Attach delete events
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', async (e) => {
-                        const id = e.currentTarget.dataset.id;
-                        const name = e.currentTarget.dataset.name;
-                        if (confirm(`Delete movie "${name}"? This cannot be undone.`)) {
-                            try {
-                                await deleteDoc(doc(db, 'movies', id));
-                                loadMovies(); // refresh list
-                            } catch (err) {
-                                alert('Delete failed: ' + err.message);
-                            }
-                        }
-                    });
-                });
+                // Initial filter and render
+                applyFilter();
             } catch (err) {
                 moviesListDiv.innerHTML = `<div class="error">❌ Error loading movies: ${err.message}</div>`;
+                paginationDiv.innerHTML = '';
             }
+        }
+
+        // Apply search filter and reset to page 1
+        function applyFilter() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm === '') {
+                filteredMovies = [...allMovies];
+            } else {
+                filteredMovies = allMovies.filter(m => 
+                    (m.name && m.name.toLowerCase().includes(searchTerm)) ||
+                    (m.description && m.description.toLowerCase().includes(searchTerm))
+                );
+            }
+            currentPage = 1;
+            renderMovies();
+        }
+
+        // Render current page of filtered movies
+        function renderMovies() {
+            const total = filteredMovies.length;
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = Math.min(start + itemsPerPage, total);
+            const paginatedMovies = filteredMovies.slice(start, end);
+
+            if (total === 0) {
+                moviesListDiv.innerHTML = '<div class="loading" style="grid-column:span 2;">📭 No movies match your search.</div>';
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            paginatedMovies.forEach(m => {
+                html += `
+                    <div class="movie-card" data-id="${m.id}">
+                        <img src="${m.logoUrl || 'https://placehold.co/600x900/1f1f2a/aaa?text=NO+POSTER'}" class="movie-poster" loading="lazy">
+                        <div class="movie-info">
+                            <div class="movie-title">${m.name || 'Untitled'}</div>
+                            <div class="movie-meta">
+                                <span><i class="far fa-calendar"></i> ${m.year || '?'}</span>
+                                <span><i class="fas fa-star" style="color:#e50914;"></i> ${m.imdbRating || '?'}</span>
+                            </div>
+                            ${m.screenshot1 ? `<img src="${m.screenshot1}" class="screenshot-thumb" loading="lazy">` : ''}
+                            <div class="action-buttons">
+                                <button class="btn btn-sm edit-btn" data-id="${m.id}"><i class="fas fa-edit"></i> Edit</button>
+                                <button class="btn btn-sm btn-outline delete-btn" data-id="${m.id}" data-name="${m.name}"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            moviesListDiv.innerHTML = html;
+
+            // Attach edit events
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    openEditModal(id);
+                });
+            });
+
+            // Attach delete events
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    const name = e.currentTarget.dataset.name;
+                    if (confirm(`Delete movie "${name}"? This cannot be undone.`)) {
+                        try {
+                            await deleteDoc(doc(db, 'movies', id));
+                            // Remove from local arrays and re-render
+                            allMovies = allMovies.filter(m => m.id !== id);
+                            applyFilter(); // re-filter and re-render
+                        } catch (err) {
+                            alert('Delete failed: ' + err.message);
+                        }
+                    }
+                });
+            });
+
+            renderPaginationControls(total);
+        }
+
+        // Pagination controls
+        function renderPaginationControls(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let html = `
+                <button class="prev-btn" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i> Prev
+                </button>
+                <div class="page-numbers">
+            `;
+
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+            if (endPage - startPage + 1 < maxVisible) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+
+            if (startPage > 1) {
+                html += `<button class="page-btn" data-page="1">1</button>`;
+                if (startPage > 2) html += `<span style="color:#6b7280; padding:0 0.2rem;">...</span>`;
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="page-btn ${i === currentPage ? 'active-page' : ''}" data-page="${i}">${i}</button>`;
+            }
+
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span style="color:#6b7280; padding:0 0.2rem;">...</span>`;
+                html += `<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+            }
+
+            html += `
+                </div>
+                <button class="next-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+
+            paginationDiv.innerHTML = html;
+
+            // Add event listeners
+            paginationDiv.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentPage = parseInt(btn.dataset.page);
+                    renderMovies();
+                });
+            });
+
+            paginationDiv.querySelector('.prev-btn')?.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderMovies();
+                }
+            });
+
+            paginationDiv.querySelector('.next-btn')?.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderMovies();
+                }
+            });
         }
 
         // Open edit modal and populate with movie data
         async function openEditModal(docId) {
             try {
-                // Fetch fresh data (or we could have stored it in the card, but refetch to be safe)
                 const docSnap = await getDoc(doc(db, 'movies', docId));
                 if (!docSnap.exists()) {
                     alert('Movie not found');
@@ -512,7 +704,6 @@
                 }
                 const m = docSnap.data();
 
-                // Populate form fields
                 editDocId.value = docId;
                 document.getElementById('edit_name').value = m.name || '';
                 document.getElementById('edit_year').value = m.year || '';
@@ -562,7 +753,6 @@
                 audio: document.getElementById('edit_audio').value.trim(),
                 subtitles: document.getElementById('edit_subtitles').value.trim(),
                 format: document.getElementById('edit_format').value.trim(),
-                // Keep backward compatibility fields
                 screenshotUrl: document.getElementById('edit_screenshot1').value.trim(),
                 downloadUrl: document.getElementById('edit_download1080p').value.trim(),
                 updatedAt: new Date().toISOString()
@@ -571,7 +761,12 @@
             try {
                 await updateDoc(doc(db, 'movies', docId), updatedData);
                 editModal.classList.remove('active');
-                loadMovies(); // refresh list
+                // Update local allMovies
+                const index = allMovies.findIndex(m => m.id === docId);
+                if (index !== -1) {
+                    allMovies[index] = { id: docId, ...updatedData };
+                }
+                applyFilter(); // re-filter and re-render
             } catch (err) {
                 alert('Update failed: ' + err.message);
             }
@@ -583,8 +778,13 @@
             if (e.target === editModal) editModal.classList.remove('active');
         });
 
-        // Import getDoc (needed for edit)
-        import { getDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+        // Search events
+        searchBtn.addEventListener('click', applyFilter);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') applyFilter();
+        });
+        // Optional: live search as you type (debounced)
+        // searchInput.addEventListener('input', applyFilter);
     </script>
 </body>
 </html>
