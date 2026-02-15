@@ -1,0 +1,590 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>CGPlay · manage movies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0e;
+            background: radial-gradient(circle at 30% 10%, #14141c 0%, #0b0b10 90%);
+            color: #f0f0fa;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #14141c;
+            border-radius: 32px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 40px -15px black;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(to right, #ffffff, #d4d4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        h1 span { color: #e50914; background: none; }
+        .sub {
+            color: #a0a0b0;
+            margin-bottom: 2rem;
+            border-left: 4px solid #e50914;
+            padding-left: 1rem;
+        }
+        .user-badge {
+            background: #2a2a35;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: 1px solid #4b5563;
+        }
+        .btn {
+            background: #e50914;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+        .btn:hover { background: #b2070f; transform: scale(1.02); }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #4b5563;
+        }
+        .btn-outline:hover { background: #2d2d3a; border-color: #e50914; }
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+        /* Login form */
+        .login-box {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: #1a1a24;
+            padding: 2rem;
+            border-radius: 28px;
+            border: 1px solid #2c2c36;
+        }
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 0.3rem;
+        }
+        .input-group input {
+            width: 100%;
+            background: #1e1e28;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            font-size: 1rem;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #e50914;
+            box-shadow: 0 0 0 3px rgba(229,9,20,0.2);
+        }
+
+        /* Movie grid */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .movie-card {
+            background: #1a1a24;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(229,9,20,0.4);
+            box-shadow: 0 20px 30px -12px black;
+        }
+        .movie-poster {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #0d0d15;
+            border-bottom: 1px solid #2c2c36;
+        }
+        .movie-info {
+            padding: 1rem;
+            flex: 1;
+        }
+        .movie-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: white;
+        }
+        .movie-meta {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .screenshot-thumb {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #363646;
+            margin: 0.5rem 0;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+            border-top: 1px solid #2c2c36;
+            padding-top: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #14141c;
+            border-radius: 32px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            border: 1px solid rgba(229,9,20,0.3);
+            box-shadow: 0 30px 50px -20px black;
+        }
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .close-modal {
+            float: right;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+        .close-modal:hover { color: white; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .loading, .error {
+            text-align: center;
+            padding: 3rem;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 700px) {
+            .admin-container { padding: 1.5rem; }
+            .movies-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 500px) {
+            .movies-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: space-between;">
+            <h1><span>CGP</span>LAY · manage movies</h1>
+            <div id="authState"></div>
+        </div>
+        <div class="sub">
+            <i class="fas fa-database"></i> list, edit, delete movies in Firestore
+        </div>
+
+        <!-- LOGIN FORM (shown when not authenticated) -->
+        <div id="loginSection" style="display: none;">
+            <div class="login-box">
+                <h3 style="margin-bottom: 1.2rem; color: #e50914;">Admin login</h3>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="admin@cgplay.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••">
+                </div>
+                <button id="loginBtn" class="btn" style="width: 100%;"><i class="fas fa-sign-in-alt"></i> Login</button>
+            </div>
+        </div>
+
+        <!-- AUTHENTICATED PANEL (shown after login) -->
+        <div id="adminPanel" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div class="user-badge">
+                    <i class="fas fa-check-circle" style="color: #22c55e;"></i> 
+                    Logged in as <span id="userEmailDisplay"></span>
+                </div>
+                <div>
+                    <a href="admin.html" class="btn btn-outline btn-sm"><i class="fas fa-plus"></i> Add new movie</a>
+                    <button id="logoutBtn" class="btn btn-outline btn-sm"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+
+            <!-- MOVIE LIST -->
+            <div id="moviesList" class="movies-grid">
+                <div class="loading"><i class="fas fa-spinner fa-pulse"></i> loading movies...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT MODAL (hidden by default) -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2><i class="fas fa-edit" style="color: #e50914;"></i> Edit movie</h2>
+            <form id="editForm" class="upload-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Basic Info -->
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Movie name *</label>
+                        <input type="text" id="edit_name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Year *</label>
+                        <input type="text" id="edit_year" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Genre *</label>
+                        <input type="text" id="edit_genre" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Runtime *</label>
+                        <input type="text" id="edit_runtime" required>
+                    </div>
+                </div>
+                <!-- Poster & Description -->
+                <div class="input-group">
+                    <label>Poster URL *</label>
+                    <input type="url" id="edit_logoUrl" required>
+                </div>
+                <div class="input-group">
+                    <label>Description *</label>
+                    <textarea id="edit_description" rows="2" required></textarea>
+                </div>
+                <!-- Screenshots -->
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Screenshot 1 URL *</label>
+                        <input type="url" id="edit_screenshot1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Screenshot 2 URL *</label>
+                        <input type="url" id="edit_screenshot2" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Caption 1</label>
+                        <input type="text" id="edit_screenshot1_caption" placeholder="Scene 1">
+                    </div>
+                    <div class="input-group">
+                        <label>Caption 2</label>
+                        <input type="text" id="edit_screenshot2_caption" placeholder="Scene 2">
+                    </div>
+                </div>
+                <!-- Download links -->
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>480p URL *</label>
+                        <input type="url" id="edit_download480p" required>
+                    </div>
+                    <div class="input-group">
+                        <label>720p URL *</label>
+                        <input type="url" id="edit_download720p" required>
+                    </div>
+                    <div class="input-group">
+                        <label>1080p URL *</label>
+                        <input type="url" id="edit_download1080p" required>
+                    </div>
+                </div>
+                <!-- Metadata -->
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>IMDb Rating *</label>
+                        <input type="text" id="edit_imdbRating" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Audio *</label>
+                        <input type="text" id="edit_audio" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Subtitles *</label>
+                        <input type="text" id="edit_subtitles" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Format *</label>
+                        <input type="text" id="edit_format" required>
+                    </div>
+                </div>
+                <input type="hidden" id="edit_docId">
+                <button type="submit" class="btn" style="margin-top: 1rem;"><i class="fas fa-save"></i> Update movie</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (modular) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYV2Wbo67_iqvMrmH9vT_4F4kYBKRLFWA",
+            authDomain: "cgplay-a2384.firebaseapp.com",
+            projectId: "cgplay-a2384",
+            storageBucket: "cgplay-a2384.firebasestorage.app",
+            messagingSenderId: "778930899763",
+            appId: "1:778930899763:web:0edca39ca044d421cf8c46",
+            measurementId: "G-X16NPMVFFQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // DOM elements
+        const loginSection = document.getElementById('loginSection');
+        const adminPanel = document.getElementById('adminPanel');
+        const authState = document.getElementById('authState');
+        const userEmailSpan = document.getElementById('userEmailDisplay');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const moviesListDiv = document.getElementById('moviesList');
+
+        // Modal elements
+        const editModal = document.getElementById('editModal');
+        const closeModal = document.getElementById('closeModal');
+        const editForm = document.getElementById('editForm');
+        const editDocId = document.getElementById('edit_docId');
+        // ... all edit fields (already in HTML)
+
+        // Auth state observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginSection.style.display = 'none';
+                adminPanel.style.display = 'block';
+                userEmailSpan.textContent = user.email;
+                loadMovies();
+            } else {
+                loginSection.style.display = 'block';
+                adminPanel.style.display = 'none';
+                moviesListDiv.innerHTML = ''; // clear
+            }
+        });
+
+        // Login
+        loginBtn.addEventListener('click', async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            if (!email || !password) return alert('Enter email and password');
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                loginEmail.value = '';
+                loginPassword.value = '';
+            } catch (err) {
+                alert('Login error: ' + err.message);
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        // Load all movies from Firestore
+        async function loadMovies() {
+            moviesListDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-pulse"></i> loading movies...</div>';
+            try {
+                const querySnapshot = await getDocs(collection(db, 'movies'));
+                if (querySnapshot.empty) {
+                    moviesListDiv.innerHTML = '<div class="loading">📭 No movies found. <a href="admin.html" style="color:#e50914;">Add one</a></div>';
+                    return;
+                }
+                let html = '';
+                querySnapshot.forEach(docSnap => {
+                    const m = docSnap.data();
+                    const id = docSnap.id;
+                    html += `
+                        <div class="movie-card" data-id="${id}">
+                            <img src="${m.logoUrl || 'https://placehold.co/600x900/1f1f2a/aaa?text=NO+POSTER'}" class="movie-poster" loading="lazy">
+                            <div class="movie-info">
+                                <div class="movie-title">${m.name || 'Untitled'}</div>
+                                <div class="movie-meta">
+                                    <span><i class="far fa-calendar"></i> ${m.year || '?'}</span>
+                                    <span><i class="fas fa-star" style="color:#e50914;"></i> ${m.imdbRating || '?'}</span>
+                                </div>
+                                ${m.screenshot1 ? `<img src="${m.screenshot1}" class="screenshot-thumb" loading="lazy">` : ''}
+                                <div class="action-buttons">
+                                    <button class="btn btn-sm edit-btn" data-id="${id}"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="btn btn-sm btn-outline delete-btn" data-id="${id}" data-name="${m.name}"><i class="fas fa-trash"></i> Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                moviesListDiv.innerHTML = html;
+
+                // Attach edit events
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.dataset.id;
+                        openEditModal(id);
+                    });
+                });
+
+                // Attach delete events
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.currentTarget.dataset.id;
+                        const name = e.currentTarget.dataset.name;
+                        if (confirm(`Delete movie "${name}"? This cannot be undone.`)) {
+                            try {
+                                await deleteDoc(doc(db, 'movies', id));
+                                loadMovies(); // refresh list
+                            } catch (err) {
+                                alert('Delete failed: ' + err.message);
+                            }
+                        }
+                    });
+                });
+            } catch (err) {
+                moviesListDiv.innerHTML = `<div class="error">❌ Error loading movies: ${err.message}</div>`;
+            }
+        }
+
+        // Open edit modal and populate with movie data
+        async function openEditModal(docId) {
+            try {
+                // Fetch fresh data (or we could have stored it in the card, but refetch to be safe)
+                const docSnap = await getDoc(doc(db, 'movies', docId));
+                if (!docSnap.exists()) {
+                    alert('Movie not found');
+                    return;
+                }
+                const m = docSnap.data();
+
+                // Populate form fields
+                editDocId.value = docId;
+                document.getElementById('edit_name').value = m.name || '';
+                document.getElementById('edit_year').value = m.year || '';
+                document.getElementById('edit_genre').value = m.genre || '';
+                document.getElementById('edit_runtime').value = m.runtime || '';
+                document.getElementById('edit_logoUrl').value = m.logoUrl || '';
+                document.getElementById('edit_description').value = m.description || '';
+                document.getElementById('edit_screenshot1').value = m.screenshot1 || '';
+                document.getElementById('edit_screenshot2').value = m.screenshot2 || '';
+                document.getElementById('edit_screenshot1_caption').value = m.screenshot1_caption || 'Scene 1';
+                document.getElementById('edit_screenshot2_caption').value = m.screenshot2_caption || 'Scene 2';
+                document.getElementById('edit_download480p').value = m.download480p || '';
+                document.getElementById('edit_download720p').value = m.download720p || '';
+                document.getElementById('edit_download1080p').value = m.download1080p || '';
+                document.getElementById('edit_imdbRating').value = m.imdbRating || '';
+                document.getElementById('edit_audio').value = m.audio || '';
+                document.getElementById('edit_subtitles').value = m.subtitles || '';
+                document.getElementById('edit_format').value = m.format || '';
+
+                editModal.classList.add('active');
+            } catch (err) {
+                alert('Error loading movie data: ' + err.message);
+            }
+        }
+
+        // Handle edit form submission
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const docId = editDocId.value;
+            if (!docId) return;
+
+            const updatedData = {
+                name: document.getElementById('edit_name').value.trim(),
+                year: document.getElementById('edit_year').value.trim(),
+                genre: document.getElementById('edit_genre').value.trim(),
+                runtime: document.getElementById('edit_runtime').value.trim(),
+                logoUrl: document.getElementById('edit_logoUrl').value.trim(),
+                description: document.getElementById('edit_description').value.trim(),
+                screenshot1: document.getElementById('edit_screenshot1').value.trim(),
+                screenshot2: document.getElementById('edit_screenshot2').value.trim(),
+                screenshot1_caption: document.getElementById('edit_screenshot1_caption').value.trim() || 'Scene 1',
+                screenshot2_caption: document.getElementById('edit_screenshot2_caption').value.trim() || 'Scene 2',
+                download480p: document.getElementById('edit_download480p').value.trim(),
+                download720p: document.getElementById('edit_download720p').value.trim(),
+                download1080p: document.getElementById('edit_download1080p').value.trim(),
+                imdbRating: document.getElementById('edit_imdbRating').value.trim(),
+                audio: document.getElementById('edit_audio').value.trim(),
+                subtitles: document.getElementById('edit_subtitles').value.trim(),
+                format: document.getElementById('edit_format').value.trim(),
+                // Keep backward compatibility fields
+                screenshotUrl: document.getElementById('edit_screenshot1').value.trim(),
+                downloadUrl: document.getElementById('edit_download1080p').value.trim(),
+                updatedAt: new Date().toISOString()
+            };
+
+            try {
+                await updateDoc(doc(db, 'movies', docId), updatedData);
+                editModal.classList.remove('active');
+                loadMovies(); // refresh list
+            } catch (err) {
+                alert('Update failed: ' + err.message);
+            }
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => editModal.classList.remove('active'));
+        window.addEventListener('click', (e) => {
+            if (e.target === editModal) editModal.classList.remove('active');
+        });
+
+        // Import getDoc (needed for edit)
+        import { getDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+    </script>
+</body>
+</html>
