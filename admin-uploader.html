@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CGPlay · admin uploader (full schema)</title>
+    <title>CGPlay · admin uploader (movies + web series)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -70,7 +70,41 @@
             font-size: 1rem;
         }
 
-        /* ---------- LOGIN / UPLOAD FORMS ---------- */
+        /* ---------- TABS ---------- */
+        .tab-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #2c2c36;
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn i {
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            background: #e50914;
+            color: white;
+        }
+
+        /* ---------- FORMS ---------- */
         .login-form, .upload-form {
             display: flex;
             flex-direction: column;
@@ -153,6 +187,12 @@
             transform: none;
         }
 
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            width: auto;
+        }
+
         .message {
             margin-top: 1.5rem;
             padding: 1rem 1.5rem;
@@ -194,10 +234,15 @@
             flex-wrap: wrap;
         }
 
-        /* ---------- GRID LAYOUTS ---------- */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 1.2rem;
         }
 
@@ -247,91 +292,55 @@
             color: #e50914;
         }
 
-        /* ---------- RESPONSIVENESS – MOBILE FIRST ADJUSTMENTS ---------- */
+        /* Episode item */
+        .episode-item {
+            background: #1a1a24;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .episode-remove {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #4b5563;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .episode-remove:hover {
+            background: #e50914;
+        }
+
+        /* ---------- RESPONSIVENESS ---------- */
         @media (max-width: 900px) {
-            .admin-container {
-                padding: 2rem 1.8rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
+            .admin-container { padding: 2rem 1.8rem; }
+            h1 { font-size: 1.8rem; }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            .admin-container {
-                padding: 1.8rem 1.5rem;
-            }
-            .grid-2 {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            h1 {
-                font-size: 1.6rem;
-            }
-            .sub {
-                font-size: 0.95rem;
-            }
+            body { padding: 1rem; }
+            .admin-container { padding: 1.8rem 1.5rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            h1 { font-size: 1.6rem; }
         }
 
         @media (max-width: 480px) {
-            .admin-container {
-                padding: 1.5rem 1.2rem;
-                border-radius: 24px;
-            }
-            h1 {
-                font-size: 1.4rem;
-                flex-wrap: wrap;
-            }
-            .logo-small {
-                width: 32px;
-            }
-            .btn {
-                padding: 0.9rem 1.2rem;
-                font-size: 1rem;
-            }
-            .flex-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.8rem;
-            }
-            .user-badge {
-                width: 100%;
-                justify-content: center;
-            }
-            .btn-outline {
-                width: 100%;
-                justify-content: center;
-            }
-            .section-title {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .admin-container {
-                padding: 1.2rem 1rem;
-            }
-            h1 {
-                font-size: 1.2rem;
-            }
-            input, textarea {
-                padding: 0.8rem 1rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* ---------- UTILITIES ---------- */
-        .text-center {
-            text-align: center;
-        }
-        .mt-2 {
-            margin-top: 1rem;
-        }
-        .w-100 {
-            width: 100%;
+            .admin-container { padding: 1.5rem 1.2rem; }
+            h1 { font-size: 1.4rem; flex-wrap: wrap; }
+            .tab-bar { justify-content: center; }
+            .tab-btn { font-size: 1rem; padding: 0.4rem 1rem; }
         }
     </style>
 </head>
@@ -343,18 +352,17 @@
             <h1><span>CGP</span>LAY · uploader</h1>
         </div>
         <div class="sub">
-            <i class="fas fa-cloud-upload-alt"></i> add new movies to Firestore – full schema (poster, 2 screenshots, 3 qualities, metadata)
+            <i class="fas fa-cloud-upload-alt"></i> add movies or web series – full schema with multiple episodes
         </div>
 
         <!-- ========== LOGIN / AUTH SECTION ========== -->
         <div id="authSection">
-            <!-- Login form (visible when not authenticated) -->
+            <!-- Login form -->
             <div id="loginFormDiv">
                 <div style="margin-bottom: 1.5rem; background: #1a1a24; padding: 1.2rem; border-radius: 24px; border: 1px solid rgba(255,255,255,0.03);">
                     <i class="fas fa-shield-alt" style="color: #60a5fa;"></i> 
                     <span style="font-weight: 600;">Admin authentication required</span>
-                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: #b0b8c0;">Use your Firebase Auth email/password. 
-                    <br>👉 Enable <strong>Email/Password</strong> in Firebase Console → Authentication.</p>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: #b0b8c0;">Use Firebase Auth email/password.</p>
                 </div>
                 <div class="login-form">
                     <div class="input-group">
@@ -371,7 +379,7 @@
                 </div>
             </div>
 
-            <!-- Authenticated state (hidden until login) -->
+            <!-- Authenticated panel (hidden until login) -->
             <div id="authenticatedPanel" style="display: none;">
                 <div class="flex-row" style="justify-content: space-between; margin-bottom: 1.8rem;">
                     <div class="user-badge">
@@ -383,12 +391,17 @@
                     </button>
                 </div>
 
-                <!-- ========== MOVIE UPLOAD FORM (FULL SCHEMA) ========== -->
-                <div style="margin-top: 1rem;">
-                    <h3 style="margin-bottom: 1.5rem; display: flex; gap: 0.6rem; font-size: 1.2rem; font-weight: 700;">
-                        <i class="fas fa-film" style="color: #e50914;"></i> Add new movie – all fields required unless marked optional
+                <!-- TABS: Movie / Web Series -->
+                <div class="tab-bar">
+                    <button id="tabMovie" class="tab-btn active"><i class="fas fa-film"></i> Movie</button>
+                    <button id="tabSeries" class="tab-btn"><i class="fas fa-tv"></i> Web Series</button>
+                </div>
+
+                <!-- ========== MOVIE FORM ========== -->
+                <div id="movieForm" style="display: block;">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: 700;">
+                        <i class="fas fa-film" style="color: #e50914;"></i> Add new movie
                     </h3>
-                    
                     <div class="upload-form">
                         <!-- Basic Info -->
                         <div class="section-title"><i class="fas fa-info-circle"></i> Basic information</div>
@@ -416,54 +429,52 @@
                         <div class="input-group">
                             <label><i class="fas fa-image"></i> Poster URL (logoUrl) *</label>
                             <input type="url" id="logoUrl" placeholder="https://...poster.jpg">
-                            <span class="info-hint">direct link to poster image (2:3 ratio works best)</span>
                         </div>
                         <div class="input-group">
                             <label><i class="fas fa-align-left"></i> Description *</label>
                             <textarea id="description" placeholder="Short plot summary..."></textarea>
                         </div>
 
-                        <!-- Screenshots (two) -->
-                        <div class="section-title"><i class="fas fa-camera"></i> Screenshots (16:9 recommended)</div>
+                        <!-- Screenshots -->
+                        <div class="section-title"><i class="fas fa-camera"></i> Screenshots (16:9)</div>
                         <div class="grid-2">
                             <div class="input-group">
                                 <label><i class="fas fa-camera"></i> Screenshot 1 URL *</label>
                                 <input type="url" id="screenshot1" placeholder="https://...scene1.jpg">
-                                <span class="info-hint">will be used on homepage</span>
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-camera"></i> Screenshot 2 URL *</label>
                                 <input type="url" id="screenshot2" placeholder="https://...scene2.jpg">
                             </div>
                             <div class="input-group">
-                                <label><i class="fas fa-scroll"></i> Caption 1 (optional)</label>
-                                <input type="text" id="screenshot1_caption" placeholder="e.g. Sandworm summoning">
+                                <label><i class="fas fa-scroll"></i> Caption 1</label>
+                                <input type="text" id="screenshot1_caption" placeholder="Sandworm summoning">
                             </div>
                             <div class="input-group">
-                                <label><i class="fas fa-heart"></i> Caption 2 (optional)</label>
-                                <input type="text" id="screenshot2_caption" placeholder="e.g. Paul & Chani">
+                                <label><i class="fas fa-heart"></i> Caption 2</label>
+                                <input type="text" id="screenshot2_caption" placeholder="Paul & Chani">
                             </div>
                         </div>
 
-                        <!-- Download links (three qualities) -->
-                        <div class="section-title"><i class="fas fa-download"></i> Download links (all required for full experience)</div>
-                        <div class="grid-2">
+                        <!-- Download links (single set) -->
+                        <div class="section-title"><i class="fas fa-download"></i> Download links</div>
+                        <div class="grid-3">
                             <div class="input-group">
                                 <label><i class="fas fa-video"></i> 480p URL *</label>
-                                <input type="url" id="download480p" placeholder="https://...480p.mp4">
+                                <input type="url" id="movie480p" placeholder="480p.mp4">
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-hd-video"></i> 720p URL *</label>
-                                <input type="url" id="download720p" placeholder="https://...720p.mp4">
+                                <input type="url" id="movie720p" placeholder="720p.mp4">
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-film"></i> 1080p URL *</label>
-                                <input type="url" id="download1080p" placeholder="https://...1080p.mp4">
+                                <input type="url" id="movie1080p" placeholder="1080p.mp4">
                             </div>
                         </div>
 
-                        <!-- Metadata (IMDB, Audio, Subtitles, Format) -->
-                        <div class="section-title"><i class="fas fa-tags"></i> Metadata (all required)</div>
+                        <!-- Metadata -->
+                        <div class="section-title"><i class="fas fa-tags"></i> Metadata</div>
                         <div class="grid-2">
                             <div class="input-group">
                                 <label><i class="fas fa-star"></i> IMDb Rating *</label>
@@ -475,22 +486,112 @@
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-subtitles"></i> Subtitles *</label>
-                                <input type="text" id="subtitles" placeholder="English, Spanish, Arabic">
+                                <input type="text" id="subtitles" placeholder="English, Spanish">
                             </div>
                             <div class="input-group">
                                 <label><i class="fas fa-folder-open"></i> Format *</label>
                                 <input type="text" id="format" placeholder="MP4 / H.265">
                             </div>
                         </div>
-
-                        <button id="uploadBtn" class="btn">
-                            <i class="fas fa-cloud-upload-alt"></i> Publish movie to Firestore
-                        </button>
-                    </div>
-                    <div id="uploadMessage" class="message">
-                        <!-- dynamic message -->
                     </div>
                 </div>
+
+                <!-- ========== WEB SERIES FORM ========== -->
+                <div id="seriesForm" style="display: none;">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: 700;">
+                        <i class="fas fa-tv" style="color: #e50914;"></i> Add new web series
+                    </h3>
+                    <div class="upload-form">
+                        <!-- Basic Info (same as movie) -->
+                        <div class="section-title"><i class="fas fa-info-circle"></i> Series information</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-heading"></i> Series name *</label>
+                                <input type="text" id="seriesName" placeholder="e.g. Stranger Things">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-tag"></i> Year *</label>
+                                <input type="text" id="seriesYear" placeholder="2025">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-theater-masks"></i> Genre *</label>
+                                <input type="text" id="seriesGenre" placeholder="Sci‑Fi / Horror">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-clock"></i> Avg. Runtime *</label>
+                                <input type="text" id="seriesRuntime" placeholder="~50 min">
+                            </div>
+                        </div>
+
+                        <!-- Poster & Description -->
+                        <div class="section-title"><i class="fas fa-image"></i> Poster & Description</div>
+                        <div class="input-group">
+                            <label><i class="fas fa-image"></i> Poster URL *</label>
+                            <input type="url" id="seriesLogoUrl" placeholder="https://...poster.jpg">
+                        </div>
+                        <div class="input-group">
+                            <label><i class="fas fa-align-left"></i> Series description *</label>
+                            <textarea id="seriesDescription" placeholder="Overall plot..."></textarea>
+                        </div>
+
+                        <!-- Screenshots (two) -->
+                        <div class="section-title"><i class="fas fa-camera"></i> Screenshots (16:9)</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-camera"></i> Screenshot 1 URL *</label>
+                                <input type="url" id="seriesScreenshot1" placeholder="https://...scene1.jpg">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-camera"></i> Screenshot 2 URL *</label>
+                                <input type="url" id="seriesScreenshot2" placeholder="https://...scene2.jpg">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-scroll"></i> Caption 1</label>
+                                <input type="text" id="seriesScreenshot1_caption" placeholder="Scene 1">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-heart"></i> Caption 2</label>
+                                <input type="text" id="seriesScreenshot2_caption" placeholder="Scene 2">
+                            </div>
+                        </div>
+
+                        <!-- Episodes (dynamic) -->
+                        <div class="section-title">
+                            <i class="fas fa-list"></i> Episodes (add multiple sessions)
+                            <button id="addEpisodeBtn" class="btn-outline btn-small" style="margin-left: auto;">
+                                <i class="fas fa-plus-circle"></i> Add Episode
+                            </button>
+                        </div>
+                        <div id="episodesContainer"></div>
+
+                        <!-- Metadata (series-level) -->
+                        <div class="section-title"><i class="fas fa-tags"></i> Series Metadata</div>
+                        <div class="grid-2">
+                            <div class="input-group">
+                                <label><i class="fas fa-star"></i> IMDb Rating *</label>
+                                <input type="text" id="seriesImdb" placeholder="8.5/10">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-language"></i> Audio *</label>
+                                <input type="text" id="seriesAudio" placeholder="English 5.1">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-subtitles"></i> Subtitles *</label>
+                                <input type="text" id="seriesSubtitles" placeholder="English, Spanish">
+                            </div>
+                            <div class="input-group">
+                                <label><i class="fas fa-folder-open"></i> Format *</label>
+                                <input type="text" id="seriesFormat" placeholder="MP4 / H.265">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Upload Button (visible in both tabs) -->
+                <button id="uploadBtn" class="btn" style="margin-top: 2rem;">
+                    <i class="fas fa-cloud-upload-alt"></i> Publish to Firestore
+                </button>
+                <div id="uploadMessage" class="message"></div>
             </div>
         </div>
         <div class="divider"></div>
@@ -500,15 +601,13 @@
         </div>
     </div>
 
-    <!-- ========== FIREBASE SDK (same config) ========== -->
+    <!-- FIREBASE SDK -->
     <script type="module">
-        // ---------- 1. IMPORT FIREBASE MODULES ----------
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-        // ---------- 2. YOUR FIREBASE CONFIGURATION ----------
         const firebaseConfig = {
             apiKey: "AIzaSyAYV2Wbo67_iqvMrmH9vT_4F4kYBKRLFWA",
             authDomain: "cgplay-a2384.firebaseapp.com",
@@ -519,13 +618,12 @@
             measurementId: "G-X16NPMVFFQ"
         };
 
-        // ---------- 3. INITIALIZE ----------
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // ---------- 4. DOM ELEMENTS ----------
+        // DOM elements
         const loginFormDiv = document.getElementById('loginFormDiv');
         const authPanel = document.getElementById('authenticatedPanel');
         const loginBtn = document.getElementById('loginBtn');
@@ -535,8 +633,16 @@
         const loginPassword = document.getElementById('loginPassword');
         const uploadBtn = document.getElementById('uploadBtn');
         const uploadMessage = document.getElementById('uploadMessage');
+        const tabMovie = document.getElementById('tabMovie');
+        const tabSeries = document.getElementById('tabSeries');
+        const movieForm = document.getElementById('movieForm');
+        const seriesForm = document.getElementById('seriesForm');
+        const addEpisodeBtn = document.getElementById('addEpisodeBtn');
+        const episodesContainer = document.getElementById('episodesContainer');
 
-        // ---------- 5. AUTH STATE OBSERVER ----------
+        let episodeCount = 0;
+
+        // Auth state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginFormDiv.style.display = 'none';
@@ -549,124 +655,212 @@
             }
         });
 
-        // ---------- 6. LOGIN ----------
+        // Login
         loginBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             const email = loginEmail.value.trim();
             const password = loginPassword.value;
-            if (!email || !password) {
-                alert('Please enter email and password');
-                return;
-            }
+            if (!email || !password) return alert('Enter email and password');
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                loginEmail.value = '';
-                loginPassword.value = '';
+                loginEmail.value = ''; loginPassword.value = '';
             } catch (error) {
-                console.error('Login error:', error);
                 alert('Login failed: ' + error.message);
             }
         });
 
-        // ---------- 7. LOGOUT ----------
+        // Logout
         logoutBtn.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
+            try { await signOut(auth); } catch (error) { console.error(error); }
         });
 
-        // ---------- 8. UPLOAD MOVIE (full schema) ----------
+        // Tab switching
+        tabMovie.addEventListener('click', () => {
+            tabMovie.classList.add('active');
+            tabSeries.classList.remove('active');
+            movieForm.style.display = 'block';
+            seriesForm.style.display = 'none';
+        });
+
+        tabSeries.addEventListener('click', () => {
+            tabSeries.classList.add('active');
+            tabMovie.classList.remove('active');
+            seriesForm.style.display = 'block';
+            movieForm.style.display = 'none';
+        });
+
+        // Add episode (for web series)
+        addEpisodeBtn.addEventListener('click', () => {
+            episodeCount++;
+            const episodeDiv = document.createElement('div');
+            episodeDiv.className = 'episode-item';
+            episodeDiv.dataset.episodeId = episodeCount;
+            episodeDiv.innerHTML = `
+                <button class="episode-remove" type="button"><i class="fas fa-trash-alt"></i> Remove</button>
+                <div class="grid-2" style="margin-bottom: 1rem;">
+                    <div class="input-group">
+                        <label>Episode title *</label>
+                        <input type="text" class="episode-title" placeholder="Episode 1">
+                    </div>
+                </div>
+                <div class="grid-3">
+                    <div class="input-group">
+                        <label>480p URL *</label>
+                        <input type="url" class="episode-480p" placeholder="480p.mp4">
+                    </div>
+                    <div class="input-group">
+                        <label>720p URL *</label>
+                        <input type="url" class="episode-720p" placeholder="720p.mp4">
+                    </div>
+                    <div class="input-group">
+                        <label>1080p URL *</label>
+                        <input type="url" class="episode-1080p" placeholder="1080p.mp4">
+                    </div>
+                </div>
+            `;
+            episodesContainer.appendChild(episodeDiv);
+
+            // Remove episode
+            episodeDiv.querySelector('.episode-remove').addEventListener('click', () => {
+                episodeDiv.remove();
+            });
+        });
+
+        // Upload handler
         uploadBtn.addEventListener('click', async (e) => {
             e.preventDefault();
 
-            // Gather all fields
-            const name = document.getElementById('movieName').value.trim();
-            const year = document.getElementById('year').value.trim();
-            const genre = document.getElementById('genre').value.trim();
-            const runtime = document.getElementById('runtime').value.trim();
-            const logoUrl = document.getElementById('logoUrl').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const screenshot1 = document.getElementById('screenshot1').value.trim();
-            const screenshot2 = document.getElementById('screenshot2').value.trim();
-            const screenshot1_caption = document.getElementById('screenshot1_caption').value.trim() || 'Scene 1';
-            const screenshot2_caption = document.getElementById('screenshot2_caption').value.trim() || 'Scene 2';
-            const download480p = document.getElementById('download480p').value.trim();
-            const download720p = document.getElementById('download720p').value.trim();
-            const download1080p = document.getElementById('download1080p').value.trim();
-            const imdbRating = document.getElementById('imdbRating').value.trim();
-            const audio = document.getElementById('audio').value.trim();
-            const subtitles = document.getElementById('subtitles').value.trim();
-            const format = document.getElementById('format').value.trim();
+            // Determine active tab
+            const isMovie = movieForm.style.display !== 'none';
 
-            // Validation – all marked with * are required
-            if (!name || !year || !genre || !runtime || !logoUrl || !description || !screenshot1 || !screenshot2 || !download480p || !download720p || !download1080p || !imdbRating || !audio || !subtitles || !format) {
-                showMessage('❌ Please fill all required fields (marked with *).', 'error');
-                return;
-            }
+            if (isMovie) {
+                // Movie validation
+                const name = document.getElementById('movieName').value.trim();
+                const year = document.getElementById('year').value.trim();
+                const genre = document.getElementById('genre').value.trim();
+                const runtime = document.getElementById('runtime').value.trim();
+                const logoUrl = document.getElementById('logoUrl').value.trim();
+                const description = document.getElementById('description').value.trim();
+                const screenshot1 = document.getElementById('screenshot1').value.trim();
+                const screenshot2 = document.getElementById('screenshot2').value.trim();
+                const screenshot1_caption = document.getElementById('screenshot1_caption').value.trim() || 'Scene 1';
+                const screenshot2_caption = document.getElementById('screenshot2_caption').value.trim() || 'Scene 2';
+                const download480p = document.getElementById('movie480p').value.trim();
+                const download720p = document.getElementById('movie720p').value.trim();
+                const download1080p = document.getElementById('movie1080p').value.trim();
+                const imdbRating = document.getElementById('imdbRating').value.trim();
+                const audio = document.getElementById('audio').value.trim();
+                const subtitles = document.getElementById('subtitles').value.trim();
+                const format = document.getElementById('format').value.trim();
 
-            // Disable button during upload
-            uploadBtn.disabled = true;
-            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> publishing...';
+                if (!name || !year || !genre || !runtime || !logoUrl || !description || !screenshot1 || !screenshot2 || !download480p || !download720p || !download1080p || !imdbRating || !audio || !subtitles || !format) {
+                    showMessage('❌ Please fill all required movie fields.', 'error');
+                    return;
+                }
 
-            try {
-                // Prepare document object – full schema
                 const movieData = {
-                    name,
-                    year,
-                    genre,
-                    runtime,
-                    logoUrl,
-                    description,
-                    screenshot1,
-                    screenshot2,
-                    screenshot1_caption,
-                    screenshot2_caption,
-                    download480p,
-                    download720p,
-                    download1080p,
-                    imdbRating,
-                    audio,
-                    subtitles,
-                    format,
-                    // Backwards compatibility
+                    type: 'movie',
+                    name, year, genre, runtime, logoUrl, description,
+                    screenshot1, screenshot2, screenshot1_caption, screenshot2_caption,
+                    download480p, download720p, download1080p,
+                    imdbRating, audio, subtitles, format,
                     screenshotUrl: screenshot1,
                     downloadUrl: download1080p,
                     createdAt: new Date().toISOString()
                 };
 
-                // Add to Firestore
-                const docRef = await addDoc(collection(db, 'movies'), movieData);
+                await uploadToFirestore(movieData, name);
 
-                showMessage(`✅ Movie "${name}" added successfully! Document ID: ${docRef.id}`, 'success');
-                
-                // Clear the entire form
-                document.querySelectorAll('input, textarea').forEach(el => {
-                    if (el.type !== 'button' && el.id !== 'loginEmail' && el.id !== 'loginPassword') {
-                        el.value = '';
+            } else {
+                // Web Series validation
+                const name = document.getElementById('seriesName').value.trim();
+                const year = document.getElementById('seriesYear').value.trim();
+                const genre = document.getElementById('seriesGenre').value.trim();
+                const runtime = document.getElementById('seriesRuntime').value.trim();
+                const logoUrl = document.getElementById('seriesLogoUrl').value.trim();
+                const description = document.getElementById('seriesDescription').value.trim();
+                const screenshot1 = document.getElementById('seriesScreenshot1').value.trim();
+                const screenshot2 = document.getElementById('seriesScreenshot2').value.trim();
+                const screenshot1_caption = document.getElementById('seriesScreenshot1_caption').value.trim() || 'Scene 1';
+                const screenshot2_caption = document.getElementById('seriesScreenshot2_caption').value.trim() || 'Scene 2';
+                const imdbRating = document.getElementById('seriesImdb').value.trim();
+                const audio = document.getElementById('seriesAudio').value.trim();
+                const subtitles = document.getElementById('seriesSubtitles').value.trim();
+                const format = document.getElementById('seriesFormat').value.trim();
+
+                if (!name || !year || !genre || !runtime || !logoUrl || !description || !screenshot1 || !screenshot2 || !imdbRating || !audio || !subtitles || !format) {
+                    showMessage('❌ Please fill all required series fields.', 'error');
+                    return;
+                }
+
+                // Collect episodes
+                const episodeItems = document.querySelectorAll('.episode-item');
+                if (episodeItems.length === 0) {
+                    showMessage('❌ Add at least one episode.', 'error');
+                    return;
+                }
+
+                const episodes = [];
+                for (let item of episodeItems) {
+                    const title = item.querySelector('.episode-title')?.value.trim();
+                    const url480 = item.querySelector('.episode-480p')?.value.trim();
+                    const url720 = item.querySelector('.episode-720p')?.value.trim();
+                    const url1080 = item.querySelector('.episode-1080p')?.value.trim();
+                    if (!title || !url480 || !url720 || !url1080) {
+                        showMessage('❌ All episode fields must be filled.', 'error');
+                        return;
                     }
-                });
+                    episodes.push({
+                        title,
+                        download480p: url480,
+                        download720p: url720,
+                        download1080p: url1080
+                    });
+                }
 
-            } catch (error) {
-                console.error('Upload error:', error);
-                showMessage('❌ Error: ' + error.message, 'error');
-            } finally {
-                uploadBtn.disabled = false;
-                uploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish movie to Firestore';
+                const seriesData = {
+                    type: 'series',
+                    name, year, genre, runtime, logoUrl, description,
+                    screenshot1, screenshot2, screenshot1_caption, screenshot2_caption,
+                    episodes,
+                    imdbRating, audio, subtitles, format,
+                    screenshotUrl: screenshot1, // for grid fallback
+                    createdAt: new Date().toISOString()
+                };
+
+                await uploadToFirestore(seriesData, name);
             }
         });
 
-        // Helper to show message
-        function showMessage(msg, type = 'success') {
+        async function uploadToFirestore(data, displayName) {
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> publishing...';
+            try {
+                const docRef = await addDoc(collection(db, 'movies'), data);
+                showMessage(`✅ "${displayName}" added! ID: ${docRef.id}`, 'success');
+                // Clear forms (simple reset)
+                document.querySelectorAll('input, textarea').forEach(el => {
+                    if (el.type !== 'button' && !el.closest('.episode-item') && el.id !== 'loginEmail' && el.id !== 'loginPassword') {
+                        el.value = '';
+                    }
+                });
+                // Remove all episodes
+                episodesContainer.innerHTML = '';
+                episodeCount = 0;
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Publish to Firestore';
+            }
+        }
+
+        function showMessage(msg, type) {
             uploadMessage.textContent = msg;
             uploadMessage.className = 'message ' + type;
             uploadMessage.style.display = 'block';
-            setTimeout(() => {
-                uploadMessage.style.display = 'none';
-            }, 6000);
+            setTimeout(() => { uploadMessage.style.display = 'none'; }, 6000);
         }
     </script>
-
 </body>
-                                           </html>
+</html>
