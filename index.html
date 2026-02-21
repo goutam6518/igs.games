@@ -256,6 +256,40 @@
             white-space: nowrap;
         }
         .search-btn:hover { background: #b8070f; transform: scale(1.01); }
+/* ---------- DYNAMIC GENRE TABS (updated) ---------- */
+        .genre-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 1rem auto 0.5rem;
+            padding: 0 1rem;
+            max-width: 1200px;
+        }
+        .genre-btn {
+            background: #1e1e2a;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            text-transform: capitalize;
+        }
+        .genre-btn:hover {
+            background: #e50914;
+            border-color: #e50914;
+            color: white;
+        }
+        .genre-btn.active {
+            background: #e50914;
+            border-color: #e50914;
+            color: white;
+            font-weight: 600;
+        }
 
         /* Movie grid same as original */
         .movies-grid {
@@ -528,6 +562,8 @@
         @media (max-width: 700px) {
             .movies-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
             .search-btn span { display: none; }
+            .genre-tabs { gap: 0.4rem; }
+            .genre-btn { padding: 0.4rem 1rem; font-size: 0.8rem; }
         }
         @media (max-width: 600px) {
             .movies-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; padding: 1rem 0.8rem; }
@@ -565,7 +601,12 @@
             <button class="search-btn" id="searchButton">
                 <i class="fas fa-filter"></i>
                 <span>Search</span>
-            </button>
+        
+        </button>
+            
+    <!-- DYNAMIC GENRE TABS (will be populated by JavaScript) -->
+    <div id="genreTabsContainer" class="genre-tabs"></div>
+
         </div>
         <p id="movieCounter">🎬 loading movies...</p>
     </div>
@@ -611,8 +652,7 @@
         <span><a href="/">DMCA</a> | <a href="/">Contact</a></span>
     </footer>
 
-    <!-- FIREBASE SDK (same as original) -->
-    <script type="module">
+  <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
@@ -631,17 +671,23 @@
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
+        // DOM elements
         const container = document.getElementById('moviesContainer');
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchButton');
         const movieCounter = document.getElementById('movieCounter');
         const paginationDiv = document.getElementById('paginationContainer');
+        const genreTabsContainer = document.getElementById('genreTabsContainer');
 
+        // State
         let allMovies = [];
         let filteredMovies = [];
         let currentPage = 1;
         const itemsPerPage = 8;
+        let searchTerm = '';
+        let selectedGenre = null; // null = All
 
+        // Helper: create movie card (unchanged)
         function createMovieCard(movie) {
             const card = document.createElement('div');
             card.className = 'movie-card';
@@ -699,6 +745,32 @@
             return card;
         }
 
+        // Parse genre string into array of trimmed lowercase genres
+        function parseGenres(genreStr) {
+            if (!genreStr || typeof genreStr !== 'string') return [];
+            return genreStr.split(',').map(g => g.trim().toLowerCase()).filter(g => g.length > 0);
+        }
+
+        // Apply both search and genre filters
+        function applyFilters() {
+            filteredMovies = allMovies.filter(movie => {
+                const matchesSearch = searchTerm === '' || 
+                    (movie.name && movie.name.toLowerCase().includes(searchTerm)) || 
+                    (movie.description && movie.description.toLowerCase().includes(searchTerm));
+                
+                let matchesGenre = true;
+                if (selectedGenre !== null) {
+                    const movieGenres = parseGenres(movie.genre);
+                    matchesGenre = movieGenres.includes(selectedGenre.toLowerCase());
+                }
+                
+                return matchesSearch && matchesGenre;
+            });
+            currentPage = 1;
+            renderMovies();
+        }
+
+        // Render movie grid based on filteredMovies
         function renderMovies() {
             container.innerHTML = '';
 
@@ -709,13 +781,18 @@
             const total = filteredMovies.length;
             const rangeStart = total === 0 ? 0 : start + 1;
             const rangeEnd = Math.min(end, total);
-            movieCounter.innerHTML = `🎬 showing ${rangeStart}-${rangeEnd} of ${total} movies · HD MP4 · free download`;
+            
+            // Update counter with filter info
+            let filterInfo = '';
+            if (searchTerm) filterInfo += ` · search: "${searchTerm}"`;
+            if (selectedGenre) filterInfo += ` · genre: ${selectedGenre}`;
+            movieCounter.innerHTML = `🎬 showing ${rangeStart}-${rangeEnd} of ${total} movies${filterInfo} · HD MP4`;
 
             if (paginatedMovies.length === 0) {
                 const noEl = document.createElement('div');
                 noEl.className = 'no-results';
                 noEl.innerHTML = `<i class="fas fa-film"></i> no matching movies · 
-                    <span style="border-bottom:1px dotted; cursor:pointer;" onclick="document.getElementById('searchInput').value=''; window.appRenderMovies();">clear search</span>`;
+                    <span style="border-bottom:1px dotted; cursor:pointer;" onclick="document.getElementById('searchInput').value=''; window.clearFilters()">clear filters</span>`;
                 container.appendChild(noEl);
                 paginationDiv.innerHTML = '';
                 return;
@@ -728,6 +805,7 @@
             renderPaginationControls(total);
         }
 
+        // Pagination (same)
         function renderPaginationControls(totalItems) {
             const totalPages = Math.ceil(totalItems / itemsPerPage);
             if (totalPages <= 1) {
@@ -797,22 +875,68 @@
             });
         }
 
-        window.appRenderMovies = (resetPage = true) => {
-            if (resetPage) currentPage = 1;
-            renderMovies();
+        // Clear all filters (called from "clear filters" link)
+        window.clearFilters = function() {
+            searchInput.value = '';
+            searchTerm = '';
+            selectedGenre = null;
+            // Remove active class from all genre buttons
+            document.querySelectorAll('.genre-btn').forEach(btn => btn.classList.remove('active'));
+            const allBtn = document.querySelector('.genre-btn[data-genre="all"]');
+            if (allBtn) allBtn.classList.add('active');
+            applyFilters();
         };
 
+        // Populate genre tabs from unique genres extracted from all movies
+        function renderGenreTabs(uniqueGenres) {
+            // Sort alphabetically
+            uniqueGenres.sort((a, b) => a.localeCompare(b));
+            
+            let html = `<button class="genre-btn active" data-genre="all">All</button>`;
+            uniqueGenres.forEach(genre => {
+                // Capitalize first letter for display
+                const displayGenre = genre.charAt(0).toUpperCase() + genre.slice(1);
+                html += `<button class="genre-btn" data-genre="${genre}">${displayGenre}</button>`;
+            });
+            genreTabsContainer.innerHTML = html;
+
+            // Add event listeners
+            document.querySelectorAll('.genre-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const genre = btn.dataset.genre;
+                    selectedGenre = genre === 'all' ? null : genre;
+                    applyFilters();
+                });
+            });
+        }
+
+        // Handle search
+        function handleSearch() {
+            searchTerm = searchInput.value.toLowerCase().trim();
+            applyFilters();
+        }
+
+        // Fetch movies and initialize
         async function loadMoviesFromFirebase() {
             try {
                 container.innerHTML = '<div class="status-message"><i class="fas fa-spinner fa-pulse"></i> loading free movie downloads...</div>';
                 
                 const querySnapshot = await getDocs(collection(db, 'movies'));
                 allMovies = [];
+                const genreSet = new Set();
                 
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if (data.name || data.logoUrl) {
                         allMovies.push({ ...data, id: doc.id });
+                        // Extract individual genres from comma-separated string
+                        if (data.genre && typeof data.genre === 'string') {
+                            const genres = data.genre.split(',').map(g => g.trim().toLowerCase()).filter(g => g.length > 0);
+                            genres.forEach(g => genreSet.add(g));
+                        }
                     }
                 });
 
@@ -825,6 +949,10 @@
                     paginationDiv.innerHTML = '';
                     return;
                 }
+
+                // Convert set to array
+                const uniqueGenres = Array.from(genreSet);
+                renderGenreTabs(uniqueGenres);
 
                 filteredMovies = [...allMovies];
                 currentPage = 1;
@@ -841,26 +969,14 @@
             }
         }
 
-        function handleSearch() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            if (searchTerm === '') {
-                filteredMovies = [...allMovies];
-            } else {
-                filteredMovies = allMovies.filter(movie => 
-                    (movie.name && movie.name.toLowerCase().includes(searchTerm)) ||
-                    (movie.description && movie.description.toLowerCase().includes(searchTerm))
-                );
-            }
-            currentPage = 1;
-            renderMovies();
-        }
-
+        // Event listeners
         searchInput.addEventListener('input', handleSearch);
         searchInput.addEventListener('keyup', (e) => {
             if (e.key === 'Enter') handleSearch();
         });
         searchBtn.addEventListener('click', handleSearch);
 
+        // Start
         loadMoviesFromFirebase();
     </script>
 </body>
