@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://cgplay.fun">
 
-    <!-- Open Graph / Facebook / WhatsApp / Discord -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="CGPlay - Free Movie Downloads: Tamil, Hindi, Telugu, Hollywood HD">
     <meta property="og:description" content="Download latest movies free in HD. New releases, Tamil dubbed, Hollywood, web series. Direct MP4 links. No registration.">
@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="Download Tamil, Hindi, Telugu, Hollywood movies free. New releases daily.">
     <meta name="twitter:image" content="https://placehold.co/1200x630/0d0d17/e50914?text=CGPlay">
 
-    <!-- (existing ad scripts – kept for functionality) -->
+    <!-- (ad scripts kept for functionality) -->
     <script>
     (function(unbq){
         var d = document,
@@ -102,7 +102,7 @@
     }
     </script>
 
-    <!-- Favicon / Manifest (placeholders) -->
+    <!-- Favicon / Manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://placehold.co/32x32/e50914/white?text=CG">
     <link rel="apple-touch-icon" href="https://placehold.co/180x180/e50914/white?text=CG">
     <meta name="theme-color" content="#e50914">
@@ -602,15 +602,13 @@
             <button class="search-btn" id="searchButton">
                 <i class="fas fa-filter"></i>
                 <span>Search</span>
-        
-        </button>
-            
-    <!-- DYNAMIC GENRE TABS (will be populated by JavaScript) -->
-    <div id="genreTabsContainer" class="genre-tabs"></div>
-
+            </button>
         </div>
         <p id="movieCounter">🎬 loading movies...</p>
     </div>
+
+    <!-- DYNAMIC GENRE TABS (will be populated by JavaScript) -->
+    <div id="genreTabsContainer" class="genre-tabs"></div>
 
     <main id="moviesContainer" class="movies-grid">
         <div class="status-message"><i class="fas fa-spinner fa-pulse"></i> loading free movies...</div>
@@ -618,7 +616,7 @@
 
     <div id="paginationContainer" class="pagination"></div>
 
-    <!-- ✦✦✦ SEO BOOST: KEYWORD-RICH SECTION + INTERNAL LINKS ✦✦✦ -->
+    <!-- SEO CONTENT (unchanged) -->
     <section class="seo-content">
         <h2>Download Free Movies & Web Series in HD Quality</h2>
         <p>Welcome to <strong>CGPlay</strong>, the premier <strong>free movie download website</strong>. Here you can find the <strong>best new movies</strong> and <strong>best new films</strong> across multiple languages: <strong>Tamil movie download</strong>, <strong>Hindi movie download</strong>, <strong>Telugu movies download</strong>, <strong>Hollywood movies download</strong>, and even <strong>web series download</strong>. Our collection includes <strong>hd hub</strong> favorites, <strong>mkv movies</strong>, <strong>mp4 movies download</strong>, and <strong>4k movies</strong> for cinema lovers.</p>
@@ -653,7 +651,8 @@
         <span><a href="/">DMCA</a> | <a href="/">Contact</a></span>
     </footer>
 
-  <script type="module">
+    <!-- FIREBASE SDK (updated with multi-genre parsing) -->
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
