@@ -3,50 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>CGPlay · Movie Details</title>
-    <meta name="description" content="Download the latest movies in HD – 480p, 720p, 1080p. Direct links, no ads.">
+    <title>CGPlay · Movie / Series Details</title>
+    <meta name="description" content="Download the latest movies and web series in HD – 480p, 720p, 1080p. Direct links, no ads.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://cgplay.fun/movie">
-    <!-- Standard favicon -->
+    <!-- Favicon etc. (keep as before) -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-    <!-- Android icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-
-    <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest">
-
-    <!-- Theme Color -->
     <meta name="theme-color" content="#ffffff">
-
-    <!-- Open Graph / Discord -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="CGPlay – Movie Details">
     <meta property="og:description" content="Direct download links, screenshots, and more.">
     <meta property="og:image" content="https://placehold.co/1200x630/0d0d17/e50914?text=CGPLAY">
     <meta property="og:url" content="https://cgplay.fun/movie">
-    <!-- Font & Icons -->
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
- <script>
-(function(unbq){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = unbq || {};
-s.src = "\/\/polished-hook.com\/b.XkVqsidhGdl\/0LYEWlcN\/Nedmc9\/uDZWULlJkWPmTQYh3gOOTEUV4TM\/jdkytbNHjVcm5tN\/Twg\/zvMqwh";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
+
     <style>
         /* ---------- SAME CINEMA DARK THEME AS INDEX, FULLY RESPONSIVE ---------- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -217,7 +197,7 @@ l.parentNode.insertBefore(s, l);
             gap: 6px;
         }
 
-        /* Download panel */
+        /* Download panel (for movies) */
         .download-panel {
             background: linear-gradient(145deg, #12121c, #0c0c14);
             border-radius: 40px;
@@ -275,6 +255,48 @@ l.parentNode.insertBefore(s, l);
             flex-wrap: wrap;
             border-top: 1px solid #262632;
             padding-top: 1.5rem;
+        }
+
+        /* Episodes list (for web series) */
+        .episodes-section {
+            margin: 2.5rem 0 1.5rem;
+        }
+        .episodes-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #e50914;
+            padding-bottom: 0.5rem;
+        }
+        .episode-card {
+            background: #16161f;
+            border-radius: 28px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #2a2a36;
+            transition: all 0.2s;
+        }
+        .episode-card:hover {
+            border-color: #e50914;
+            box-shadow: 0 15px 25px -12px black;
+        }
+        .episode-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .episode-downloads {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .episode-downloads .btn-download {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
         }
 
         /* Metadata panel */
@@ -366,6 +388,7 @@ l.parentNode.insertBefore(s, l);
             }
             .button-group { justify-content: center; }
             .btn-download { padding: 0.8rem 1.5rem; }
+            .episode-card { padding: 1.2rem; }
         }
         @media (max-width: 500px) {
             .movie-title-xl { font-size: 1.8rem; }
@@ -384,24 +407,32 @@ l.parentNode.insertBefore(s, l);
     <header class="site-header">
         <div class="logo-container">
             <a href="index.html" class="logo-link">
-           
-
-            <span class="brand-text"><span>CGP</span>LAY</span>     </a>
+                <img class="site-logo" 
+                     src="https://placehold.co/200x70/0d0d17/e50914?text=CGPLAY&font=montserrat" 
+                     alt="CGPlay official logo"
+                     onerror="this.src='https://via.placeholder.com/200x70/0a0a12/fff?text=CGPLAY';">
+            </a>
+            <span class="brand-text"><span>CGP</span>LAY</span>
+        </div>
+        <div class="header-right">
+            <a href="index.html" style="color:white; text-decoration:none; font-weight:500;"><i class="fas fa-home"></i> Home</a>
+            <div class="filebase-badge">
+                <i class="fas fa-database"></i> 
+                <span>FILE BASE</span>
+            </div>
         </div>
     </header>
 
     <main class="movie-download-container" id="movieContainer">
         <!-- Dynamic content will be injected here -->
         <div class="status-message">
-            <i class="fas fa-spinner fa-pulse"></i> loading movie details...
+            <i class="fas fa-spinner fa-pulse"></i> loading details...
         </div>
     </main>
-<script async="async" data-cfasync="false" src="https://pl28741668.effectivegatecpm.com/2314bad42b665aa3c77066f171047c95/invoke.js"></script>
-<div id="container-2314bad42b665aa3c77066f171047c95"></div>
+
     <footer>
         <span>© 2025 CGPLAY.FUN — cinema direct</span>
-
-
+        <span><i class="fas fa-cloud"></i> live from Firestore</span>
     </footer>
 
     <!-- Firebase SDK (v12.9.0 modular) -->
@@ -418,7 +449,7 @@ l.parentNode.insertBefore(s, l);
         import { initializeApp } from "firebase/app";
         import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-        // ---------- Firebase config (identical to index.html) ----------
+        // ---------- Firebase config (identical to admin panel) ----------
         const firebaseConfig = {
             apiKey: "AIzaSyAYV2Wbo67_iqvMrmH9vT_4F4kYBKRLFWA",
             authDomain: "cgplay-a2384.firebaseapp.com",
@@ -432,159 +463,163 @@ l.parentNode.insertBefore(s, l);
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ---------- Get movie ID from URL ----------
+        // ---------- Get movie/series ID from URL ----------
         const urlParams = new URLSearchParams(window.location.search);
-        const movieId = urlParams.get('id');
+        const itemId = urlParams.get('id');  // document ID
 
         const container = document.getElementById('movieContainer');
 
-        async function loadMovie() {
-            if (!movieId) {
+        async function loadItem() {
+            if (!itemId) {
                 container.innerHTML = `<div class="status-message" style="color:#ffb3b3;">
-                    <i class="fas fa-exclamation-triangle"></i> No movie ID specified.<br>
+                    <i class="fas fa-exclamation-triangle"></i> No ID specified.<br>
                     <span style="font-size:1rem;">Go back to <a href="index.html" style="color:#e50914;">homepage</a>.</span>
                 </div>`;
                 return;
             }
 
             try {
-                const docRef = doc(db, 'movies', movieId);
+                const docRef = doc(db, 'movies', itemId);
                 const docSnap = await getDoc(docRef);
 
                 if (!docSnap.exists()) {
                     container.innerHTML = `<div class="status-message">
-                        <i class="fas fa-database"></i> Movie not found.<br>
-                        <span style="font-size:1rem;">The movie may have been removed.</span>
+                        <i class="fas fa-database"></i> Item not found.<br>
+                        <span style="font-size:1rem;">It may have been removed.</span>
                     </div>`;
                     return;
                 }
 
-                const movie = docSnap.data();
-                renderMovie(movie);
+                const data = docSnap.data();
+                renderItem(data);
 
             } catch (error) {
                 console.error('Firebase error:', error);
                 container.innerHTML = `<div class="status-message" style="color:#ffb3b3;">
-                    <i class="fas fa-exclamation-triangle"></i> Failed to load movie.<br>
+                    <i class="fas fa-exclamation-triangle"></i> Failed to load.<br>
                     <span style="font-size:0.9rem;">${error.message}</span>
                 </div>`;
             }
         }
 
-        function renderMovie(movie) {
-            // Helper to safely get text or fallback
-            const get = (field, fallback = '') => movie[field] || fallback;
+        function renderItem(item) {
+            // Helper to safely get field or fallback
+            const get = (field, fallback = '') => item[field] !== undefined ? item[field] : fallback;
 
-            // Build the HTML dynamically
-            const html = `
+            // Common fields
+            const title = get('name', 'Untitled');
+            const year = get('year', '');
+            const genre = get('genre', '');
+            const runtime = get('runtime', '');
+            const poster = get('logoUrl', 'https://placehold.co/600x900/1a1a24/fff?text=NO+POSTER');
+            const description = get('description', 'No description available.');
+            const screenshot1 = get('screenshot1', 'https://placehold.co/1280x720/1e1e2a/bbb?text=NO+SCREENSHOT');
+            const screenshot2 = get('screenshot2', 'https://placehold.co/1280x720/22222e/ccc?text=NO+SCREENSHOT');
+            const caption1 = get('screenshot1_caption', 'Scene 1');
+            const caption2 = get('screenshot2_caption', 'Scene 2');
+
+            // Metadata
+            const imdbRating = get('imdbRating', '');
+            const audio = get('audio', '');
+            const subtitles = get('subtitles', '');
+            const format = get('format', '');
+
+            // Determine type
+            const type = get('type', 'movie'); // default to movie if not set
+
+            // Start building HTML
+            let html = `
                 <!-- Hero section -->
                 <div class="movie-hero">
-                    <img class="movie-poster-large" 
-                         src="${get('logoUrl', 'https://placehold.co/600x900/1a1a24/fff?text=NO+POSTER')}" 
-                         alt="${get('name', 'Movie')} poster"
-                         loading="lazy">
+                    <img class="movie-poster-large" src="${poster}" alt="${title} poster" loading="lazy">
                     <div class="hero-details">
-                        <div class="movie-title-xl">${get('name', 'Untitled')} 
-                            ${movie.year ? `<span style="font-size:1rem; color:#e50914;">${movie.year}</span>` : ''}
-                        </div>
+                        <div class="movie-title-xl">${title} ${year ? `<span style="font-size:1rem; color:#e50914;">${year}</span>` : ''}</div>
                         <div class="movie-year-genre">
-                            ${movie.genre ? `<span><i class="fas fa-film" style="color:#e50914;"></i> ${movie.genre}</span>` : ''}
-                            ${movie.runtime ? `<span><i class="fas fa-clock" style="color:#e50914;"></i> ${movie.runtime}</span>` : ''}
+                            ${genre ? `<span><i class="fas fa-film" style="color:#e50914;"></i> ${genre}</span>` : ''}
+                            ${runtime ? `<span><i class="fas fa-clock" style="color:#e50914;"></i> ${runtime}</span>` : ''}
                             <span class="badge-4k"><i class="fas fa-download"></i> 4K ready</span>
                         </div>
-                        <div class="movie-description-full">
-                            ${get('description', 'No description available.')}
-                        </div>
+                        <div class="movie-description-full">${description}</div>
                     </div>
                 </div>
 
-                <!-- Two screenshots – if missing, show placeholders -->
+                <!-- Screenshots grid -->
                 <div class="screenshot-grid">
                     <div class="screenshot-item">
-                        <img class="screenshot-img" 
-                             src="${get('screenshot1', 'https://placehold.co/1280x720/1e1e2a/bbb?text=NO+SCREENSHOT')}" 
-                             alt="${get('name')} screenshot 1"
-                             loading="lazy">
-                        <div class="screenshot-caption">
-                            <i class="fas fa-scroll" style="color:#e50914;"></i> 
-                            ${get('screenshot1_caption', 'Scene 1')}
-                        </div>
+                        <img class="screenshot-img" src="${screenshot1}" alt="${title} screenshot 1" loading="lazy">
+                        <div class="screenshot-caption"><i class="fas fa-scroll" style="color:#e50914;"></i> ${caption1}</div>
                     </div>
                     <div class="screenshot-item">
-                        <img class="screenshot-img" 
-                             src="${get('screenshot2', 'https://placehold.co/1280x720/22222e/ccc?text=NO+SCREENSHOT')}" 
-                             alt="${get('name')} screenshot 2"
-                             loading="lazy">
-                        <div class="screenshot-caption">
-                            <i class="fas fa-heart" style="color:#e50914;"></i> 
-                            ${get('screenshot2_caption', 'Scene 2')}
-                        </div>
+                        <img class="screenshot-img" src="${screenshot2}" alt="${title} screenshot 2" loading="lazy">
+                        <div class="screenshot-caption"><i class="fas fa-heart" style="color:#e50914;"></i> ${caption2}</div>
                     </div>
                 </div>
-
-                <!-- Download panel – three qualities -->
-                <div class="download-panel">
-                    <div class="download-title">
-                        <i class="fas fa-download"></i> Direct download – choose quality
-                    </div>
-                    <div class="button-group">
-                        ${movie.download480p ? 
-                            `<a href="${movie.download480p}" class="btn-download btn-480p" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-video"></i> 480p (SD)
-                            </a>` : ''}
-                        ${movie.download720p ? 
-                            `<a href="${movie.download720p}" class="btn-download btn-720p" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-hd-video"></i> 720p (HD)
-                            </a>` : ''}
-                        ${movie.download1080p ? 
-                            `<a href="${movie.download1080p}" class="btn-download btn-1080p" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-film"></i> 1080p (FHD)
-                            </a>` : ''}
-                    </div>
-                    <div class="file-info">
-                        <span><i class="fas fa-database"></i> Filebase secure storage</span>
-                        <span><i class="fas fa-shield-alt"></i> No registration, no ads</span>
-                        <span><i class="fas fa-clock"></i> Updated: March 2025</span>
-                    </div>
-                </div>
-
-                <!-- Metadata panel – hide whole panel if no data -->
-                ${ (movie.imdbRating || movie.audio || movie.subtitles || movie.format) ? `
-                <div class="movie-metadata-panel">
-                    ${movie.imdbRating ? `
-                    <div class="meta-item">
-                        <span class="meta-label"><i class="fas fa-star"></i> IMDB</span>
-                        <span class="meta-value">${movie.imdbRating}</span>
-                    </div>` : ''}
-                    ${movie.audio ? `
-                    <div class="meta-item">
-                        <span class="meta-label"><i class="fas fa-language"></i> Audio</span>
-                        <span class="meta-value">${movie.audio}</span>
-                    </div>` : ''}
-                    ${movie.subtitles ? `
-                    <div class="meta-item">
-                        <span class="meta-label"><i class="fas fa-subtitles"></i> Subtitles</span>
-                        <span class="meta-value">${movie.subtitles}</span>
-                    </div>` : ''}
-                    ${movie.format ? `
-                    <div class="meta-item">
-                        <span class="meta-label"><i class="fas fa-folder-open"></i> Format</span>
-                        <span class="meta-value">${movie.format}</span>
-                    </div>` : ''}
-                </div>` : ''}
             `;
 
-            container.innerHTML = html;
-            document.title = `CGPlay · ${get('name', 'Movie')} – download 480p/720p/1080p`;
+            // ----- DOWNLOAD SECTION (depends on type) -----
+            if (type === 'movie') {
+                // Movie: show three quality buttons
+                const download480p = get('download480p', '');
+                const download720p = get('download720p', '');
+                const download1080p = get('download1080p', '');
 
-            // Update the "report link" to include movie title
-            const reportLink = document.getElementById('reportLink');
-            if (reportLink) {
-                reportLink.href = `mailto:?subject=Report%20link%3A%20${encodeURIComponent(get('name'))}`;
+                html += `
+                    <div class="download-panel">
+                        <div class="download-title"><i class="fas fa-download"></i> Direct download – choose quality</div>
+                        <div class="button-group">
+                            ${download480p ? `<a href="${download480p}" class="btn-download btn-480p" target="_blank" rel="noopener noreferrer"><i class="fas fa-video"></i> 480p (SD)</a>` : ''}
+                            ${download720p ? `<a href="${download720p}" class="btn-download btn-720p" target="_blank" rel="noopener noreferrer"><i class="fas fa-hd-video"></i> 720p (HD)</a>` : ''}
+                            ${download1080p ? `<a href="${download1080p}" class="btn-download btn-1080p" target="_blank" rel="noopener noreferrer"><i class="fas fa-film"></i> 1080p (FHD)</a>` : ''}
+                        </div>
+                        <div class="file-info">
+                            <span><i class="fas fa-database"></i> Filebase secure storage</span>
+                            <span><i class="fas fa-shield-alt"></i> No registration, no ads</span>
+                            <span><i class="fas fa-clock"></i> Updated: March 2025</span>
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'series') {
+                // Web series: show episodes list
+                const episodes = get('episodes', []);
+                if (episodes.length > 0) {
+                    html += `<div class="episodes-section"><h2><i class="fas fa-list"></i> Episodes</h2>`;
+                    episodes.forEach((ep, index) => {
+                        const epTitle = ep.title || `Episode ${index+1}`;
+                        const ep480 = ep.download480p || '';
+                        const ep720 = ep.download720p || '';
+                        const ep1080 = ep.download1080p || '';
+                        html += `
+                            <div class="episode-card">
+                                <div class="episode-title">${epTitle}</div>
+                                <div class="episode-downloads">
+                                    ${ep480 ? `<a href="${ep480}" class="btn-download btn-480p" target="_blank" rel="noopener noreferrer"><i class="fas fa-video"></i> 480p</a>` : ''}
+                                    ${ep720 ? `<a href="${ep720}" class="btn-download btn-720p" target="_blank" rel="noopener noreferrer"><i class="fas fa-hd-video"></i> 720p</a>` : ''}
+                                    ${ep1080 ? `<a href="${ep1080}" class="btn-download btn-1080p" target="_blank" rel="noopener noreferrer"><i class="fas fa-film"></i> 1080p</a>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else {
+                    html += `<div class="status-message">No episodes listed yet.</div>`;
+                }
             }
+
+            // ----- METADATA PANEL (if any metadata exists) -----
+            if (imdbRating || audio || subtitles || format) {
+                html += `<div class="movie-metadata-panel">`;
+                if (imdbRating) html += `<div class="meta-item"><span class="meta-label"><i class="fas fa-star"></i> IMDB</span><span class="meta-value">${imdbRating}</span></div>`;
+                if (audio) html += `<div class="meta-item"><span class="meta-label"><i class="fas fa-language"></i> Audio</span><span class="meta-value">${audio}</span></div>`;
+                if (subtitles) html += `<div class="meta-item"><span class="meta-label"><i class="fas fa-subtitles"></i> Subtitles</span><span class="meta-value">${subtitles}</span></div>`;
+                if (format) html += `<div class="meta-item"><span class="meta-label"><i class="fas fa-folder-open"></i> Format</span><span class="meta-value">${format}</span></div>`;
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+            document.title = `CGPlay · ${title} – download 480p/720p/1080p`;
         }
 
-        loadMovie();
+        loadItem();
     </script>
 </body>
 </html>
